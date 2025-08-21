@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Surplus Food Redistribution - View Listings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css"/>
+    <meta name="description" content="View available surplus food listings">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+</head>
+<body class="bg-gray-50">
+    <!-- Updated header to match consistent navigation across all pages -->
+    <header class="bg-gradient-to-r from-green-600 via-teal-500 to-blue-500 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <span class="animate-pulse">🍽️</span> Smart Food Share
+            </h1>
+            <nav class="space-x-4 text-sm">
+                <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+                <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+                <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add</a>
+                <a href="list.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">View List</a>
+                <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+                <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+                <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+                <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+                <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+                <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign In</a>
+                <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Added hero section with live stats and quick actions -->
+    <section class="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 text-white py-8 text-center shadow-xl relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+            <h2 class="text-3xl font-bold mb-2">Available Surplus Food</h2>
+            <p class="opacity-90 mb-4">Fresh food waiting to be rescued • Updated in real-time</p>
+            <div class="flex justify-center gap-6 text-sm">
+                <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <span id="totalListings">0</span> Active Listings
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <span id="totalPortions">0</span> Portions Available
+                </div>
+                <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                    <span id="urgentCount">0</span> Urgent Pickups
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Enhanced filters with better styling and more options -->
+        <div class="card mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">🔍</span>
+                <h3 class="text-xl font-semibold">Filter & Search</h3>
+                <button id="clearFilters" class="ml-auto text-sm text-blue-600 hover:text-blue-800">Clear All</button>
+            </div>
+            <div class="grid md:grid-cols-4 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Food Type</label>
+                    <select id="foodType" class="w-full">
+                        <option value="">All Types</option>
+                        <option value="Veg">Vegetarian</option>
+                        <option value="Non-Veg">Non-Vegetarian</option>
+                        <option value="Snacks">Snacks</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Sweets">Sweets</option>
+                        <option value="Fruits">Fruits</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Location</label>
+                    <select id="location" class="w-full">
+                        <option value="">All Locations</option>
+                        <option value="Main Canteen">Main Canteen</option>
+                        <option value="Hostel A Mess">Hostel A Mess</option>
+                        <option value="Hostel B Mess">Hostel B Mess</option>
+                        <option value="Hostel C Cafeteria">Hostel C Cafeteria</option>
+                        <option value="Event Hall">Event Hall</option>
+                        <option value="Auditorium">Auditorium</option>
+                        <option value="Faculty Lounge">Faculty Lounge</option>
+                        <option value="Library Cafe">Library Cafe</option>
+                        <option value="Sports Complex">Sports Complex</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Urgency</label>
+                    <select id="urgency" class="w-full">
+                        <option value="">All</option>
+                        <option value="fresh">Fresh (4+ hours)</option>
+                        <option value="good">Good (2-4 hours)</option>
+                        <option value="urgent">Urgent (< 2 hours)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2 text-gray-700">Search</label>
+                    <input type="text" id="search" class="w-full" placeholder="Search food items...">
+                </div>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+                <button class="category-filter-btn active" data-category="all">All Categories</button>
+                <button class="category-filter-btn" data-category="indian">🍛 Indian</button>
+                <button class="category-filter-btn" data-category="chinese">🥢 Chinese</button>
+                <button class="category-filter-btn" data-category="continental">🍝 Continental</button>
+                <button class="category-filter-btn" data-category="snacks">🍪 Snacks</button>
+            </div>
+        </div>
+
+        <!-- Added sorting and view options -->
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex items-center gap-4">
+                <span class="text-sm text-gray-600">Sort by:</span>
+                <select id="sortBy" class="text-sm border border-gray-300 rounded-lg px-3 py-1">
+                    <option value="newest">Newest First</option>
+                    <option value="urgent">Most Urgent</option>
+                    <option value="quantity">Highest Quantity</option>
+                    <option value="location">Location A-Z</option>
+                </select>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="gridView" class="p-2 bg-blue-500 text-white rounded-lg">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                    </svg>
+                </button>
+                <button id="listView" class="p-2 bg-gray-300 text-gray-600 rounded-lg">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 8a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 16a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <main>
+            <!-- Enhanced listings grid with food images and better layout -->
+            <div class="listings-grid grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="listingsGrid">
+                <!-- Listings will be populated by JavaScript -->
+            </div>
+
+            <div class="no-listings text-center py-12 hidden" id="noListings">
+                <div class="text-6xl mb-4">🔍</div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-2">No Listings Found</h3>
+                <p class="text-gray-500 mb-6">No surplus food matches your current filters. Try adjusting your search criteria.</p>
+                <a href="add.html" class="btn btn-primary">Add New Listing</a>
+            </div>
+        </main>
+
+        <!-- Added quick stats and impact section -->
+        <div class="card mt-8">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">📊</span>
+                <h3 class="text-xl font-semibold">Today's Impact</h3>
+            </div>
+            <div class="grid md:grid-cols-4 gap-4" id="impactStats">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gradient-to-r from-green-700 via-teal-600 to-blue-600 text-white text-center p-6 mt-10">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-lg font-semibold mb-2">🌱 Smart Food Share © 2025 — Kolkata Campus</p>
+            <p class="text-sm opacity-80">Together for a Zero-Waste Future</p>
+        </div>
+    </footer>
+
+    <script>
+        function read(key, fallback) {
+            try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+        }
+
+        function write(key, val) {
+            localStorage.setItem(key, JSON.stringify(val));
+        }
+
+        function minsLeft(listing) {
+            const expireAt = listing.createdAt + listing.safeHours * 60 * 60 * 1000;
+            return Math.max(0, Math.floor((expireAt - Date.now()) / 60000));
+        }
+
+        function isActive(listing) {
+            return minsLeft(listing) > 0;
+        }
+
+        function getUrgencyLevel(listing) {
+            const mins = minsLeft(listing);
+            if (mins > 240) return 'fresh';
+            if (mins > 120) return 'good';
+            return 'urgent';
+        }
+
+        function getUrgencyClass(urgency) {
+            switch(urgency) {
+                case 'fresh': return 'bg-green-100 text-green-800';
+                case 'good': return 'bg-yellow-100 text-yellow-800';
+                case 'urgent': return 'bg-red-100 text-red-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        function createListingCard(listing) {
+            const urgency = getUrgencyLevel(listing);
+            const mins = minsLeft(listing);
+            const hours = Math.floor(mins / 60);
+            const remainingMins = mins % 60;
+            const timeText = hours > 0 ? `${hours}h ${remainingMins}m` : `${mins}m`;
+
+            return `
+                <div class="card hover:scale-105 transition-transform relative overflow-hidden" data-type="${listing.type}" data-location="${listing.location}" data-urgency="${urgency}" data-category="${listing.category || 'indian'}">
+                    <!-- Added food image with overlay -->
+                    <div class="relative mb-4">
+                        <img src="${listing.image || '/placeholder.svg?height=200&width=300&query=' + listing.title}" alt="${listing.title}" class="w-full h-48 object-cover rounded-lg">
+                        <div class="absolute top-2 left-2">
+                            <span class="px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold ${listing.type === 'Veg' ? 'text-green-600' : 'text-red-600'}">
+                                ${listing.type === 'Veg' ? '🥗' : '🍖'} ${listing.type}
+                            </span>
+                        </div>
+                        <div class="absolute top-2 right-2">
+                            <span class="px-2 py-1 ${getUrgencyClass(urgency)} backdrop-blur-sm rounded-full text-xs font-semibold">
+                                ${timeText} left
+                            </span>
+                        </div>
+                        <div class="absolute bottom-2 left-2">
+                            <span class="px-2 py-1 bg-black/70 text-white backdrop-blur-sm rounded-full text-xs">
+                                ⭐ ${listing.rating || '4.5'}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-1">${listing.title}</h3>
+                            <p class="text-sm text-gray-600">${listing.category || 'Indian'} • ${listing.quantity} portions</p>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <span>📍</span>
+                            <span>${listing.location}</span>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-sm text-gray-600">
+                            <span>📞</span>
+                            <span>${listing.contact}</span>
+                        </div>
+
+                        <div class="bg-gray-50 rounded-lg p-3">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-gray-600">Available until:</span>
+                                <span class="font-semibold ${urgency === 'urgent' ? 'text-red-600' : 'text-gray-800'}">
+                                    ${new Date(listing.createdAt + listing.safeHours * 60 * 60 * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button class="btn btn-primary flex-1" onclick="requestPickup('${listing.id}')">
+                                🚚 Request Pickup
+                            </button>
+                            <button class="btn btn-secondary" onclick="shareListing('${listing.id}')">
+                                📤
+                            </button>
+                            <button class="btn btn-secondary" onclick="saveListing('${listing.id}')">
+                                ❤️
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderListings(listings) {
+            const grid = document.getElementById('listingsGrid');
+            const noListings = document.getElementById('noListings');
+            
+            if (listings.length === 0) {
+                grid.classList.add('hidden');
+                noListings.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                noListings.classList.add('hidden');
+                grid.innerHTML = listings.map(createListingCard).join('');
+            }
+
+            updateStats(listings);
+        }
+
+        function updateStats(listings) {
+            const totalListings = listings.length;
+            const totalPortions = listings.reduce((sum, listing) => sum + (listing.quantity || 0), 0);
+            const urgentCount = listings.filter(listing => getUrgencyLevel(listing) === 'urgent').length;
+
+            document.getElementById('totalListings').textContent = totalListings;
+            document.getElementById('totalPortions').textContent = totalPortions;
+            document.getElementById('urgentCount').textContent = urgentCount;
+
+            // Update impact stats
+            const co2Saved = (totalPortions * 0.3).toFixed(1);
+            const waterSaved = totalPortions * 5;
+            const peopleFed = Math.round(totalPortions * 0.9);
+
+            document.getElementById('impactStats').innerHTML = `
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-600">${peopleFed}</div>
+                    <div class="text-sm text-gray-600">People Fed</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600">${co2Saved}kg</div>
+                    <div class="text-sm text-gray-600">CO₂ Saved</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-teal-600">${waterSaved}L</div>
+                    <div class="text-sm text-gray-600">Water Saved</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-purple-600">${totalListings}</div>
+                    <div class="text-sm text-gray-600">Meals Rescued</div>
+                </div>
+            `;
+        }
+
+        function filterAndSortListings() {
+            let listings = read('listings', []).filter(isActive);
+            
+            // Apply filters
+            const typeFilter = document.getElementById('foodType').value;
+            const locationFilter = document.getElementById('location').value;
+            const urgencyFilter = document.getElementById('urgency').value;
+            const searchFilter = document.getElementById('search').value.toLowerCase();
+            const categoryFilter = document.querySelector('.category-filter-btn.active').dataset.category;
+
+            listings = listings.filter(listing => {
+                const matchesType = !typeFilter || listing.type === typeFilter;
+                const matchesLocation = !locationFilter || listing.location === locationFilter;
+                const matchesUrgency = !urgencyFilter || getUrgencyLevel(listing) === urgencyFilter;
+                const matchesSearch = !searchFilter || 
+                    listing.title.toLowerCase().includes(searchFilter) ||
+                    listing.location.toLowerCase().includes(searchFilter);
+                const matchesCategory = categoryFilter === 'all' || (listing.category || 'indian') === categoryFilter;
+
+                return matchesType && matchesLocation && matchesUrgency && matchesSearch && matchesCategory;
+            });
+
+            // Apply sorting
+            const sortBy = document.getElementById('sortBy').value;
+            listings.sort((a, b) => {
+                switch(sortBy) {
+                    case 'newest': return b.createdAt - a.createdAt;
+                    case 'urgent': return minsLeft(a) - minsLeft(b);
+                    case 'quantity': return (b.quantity || 0) - (a.quantity || 0);
+                    case 'location': return a.location.localeCompare(b.location);
+                    default: return 0;
+                }
+            });
+
+            renderListings(listings);
+        }
+
+        function requestPickup(listingId) {
+            const listings = read('listings', []);
+            const listing = listings.find(l => l.id === listingId);
+            if (listing) {
+                // Add to claims
+                const claims = read('claims', []);
+                claims.push({
+                    listingId: listingId,
+                    user: 'Current User',
+                    at: Date.now()
+                });
+                write('claims', claims);
+
+                showNotification(`✅ Pickup request sent for "${listing.title}"!`, 'success');
+            }
+        }
+
+        function shareListing(listingId) {
+            const url = `${window.location.origin}/list.html?highlight=${listingId}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Surplus Food Available',
+                    text: 'Check out this available food listing!',
+                    url: url
+                });
+            } else {
+                navigator.clipboard.writeText(url).then(() => {
+                    showNotification('📋 Link copied to clipboard!', 'info');
+                });
+            }
+        }
+
+        function saveListing(listingId) {
+            const saved = read('savedListings', []);
+            if (!saved.includes(listingId)) {
+                saved.push(listingId);
+                write('savedListings', saved);
+                showNotification('❤️ Listing saved to favorites!', 'success');
+            } else {
+                showNotification('Already in favorites!', 'info');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 text-white ${
+                type === 'success' ? 'bg-green-500' : 
+                type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            filterAndSortListings();
+
+            // Add event listeners
+            document.getElementById('foodType').addEventListener('change', filterAndSortListings);
+            document.getElementById('location').addEventListener('change', filterAndSortListings);
+            document.getElementById('urgency').addEventListener('change', filterAndSortListings);
+            document.getElementById('search').addEventListener('input', filterAndSortListings);
+            document.getElementById('sortBy').addEventListener('change', filterAndSortListings);
+
+            document.getElementById('clearFilters').addEventListener('click', () => {
+                document.getElementById('foodType').value = '';
+                document.getElementById('location').value = '';
+                document.getElementById('urgency').value = '';
+                document.getElementById('search').value = '';
+                document.getElementById('sortBy').value = 'newest';
+                document.querySelectorAll('.category-filter-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector('[data-category="all"]').classList.add('active');
+                filterAndSortListings();
+            });
+
+            document.querySelectorAll('.category-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    filterAndSortListings();
+                });
+            });
+
+            // Auto-refresh every 30 seconds
+            setInterval(filterAndSortListings, 30000);
+        });
+    </script>
+</body>
+</html>

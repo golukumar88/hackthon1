@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Listings - Smart Food Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Browse available surplus food listings">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+</head>
+<body class="bg-gray-50">
+
+  <!-- Updated header to match consistent navigation across all pages -->
+  <header class="bg-gradient-to-r from-green-600 via-teal-500 to-blue-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold flex items-center gap-2">
+        <span class="animate-pulse">🍽️</span> Smart Food Share
+      </h1>
+      <nav class="space-x-4 text-sm">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+        <a href="listings.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Listings</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">View List</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Enhanced hero section with live stats and floating food images -->
+  <section class="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 text-white py-12 text-center shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/10"></div>
+    <!-- Added floating food images for visual appeal -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute top-10 left-10 w-16 h-16 rounded-full opacity-20 animate-bounce" style="animation-delay: 0s;">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute top-20 right-20 w-12 h-12 rounded-full opacity-20 animate-bounce" style="animation-delay: 1s;">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute bottom-20 left-20 w-14 h-14 rounded-full opacity-20 animate-bounce" style="animation-delay: 2s;">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute bottom-10 right-10 w-18 h-18 rounded-full opacity-20 animate-bounce" style="animation-delay: 1.5s;">
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <h2 class="text-4xl font-bold mb-4">Surplus Food Listings</h2>
+      <p class="mt-2 opacity-90 text-lg">Claim surplus food before it goes to waste. Fresh, safe, and free for our campus community!</p>
+      <!-- Added live stats display -->
+      <div class="mt-6 flex justify-center gap-6 text-sm">
+        <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+          <span id="liveListings">0</span> Active Listings
+        </div>
+        <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+          <span id="totalPortions">0</span> Portions Available
+        </div>
+        <div class="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+          <span id="urgentCount">0</span> Urgent Pickups
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced filter section with more options and better styling -->
+  <div class="max-w-7xl mx-auto px-6 py-8">
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">🔍</span>
+        <h3 class="text-xl font-semibold">Filter & Search</h3>
+        <button id="clearFilters" class="ml-auto text-sm text-blue-600 hover:text-blue-800">Clear All</button>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-700">Search Food</label>
+          <input type="text" id="searchInput" placeholder="🔍 Search food..." class="w-full">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-700">Food Type</label>
+          <select id="typeFilter" class="w-full">
+            <option value="">All Types</option>
+            <option value="Veg">Vegetarian</option>
+            <option value="Non-Veg">Non-Vegetarian</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Sweets">Sweets</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Fruits">Fruits</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-700">Location</label>
+          <select id="locationFilter" class="w-full">
+            <option value="">All Locations</option>
+            <option value="Main Canteen">Main Canteen</option>
+            <option value="Hostel A Mess">Hostel A Mess</option>
+            <option value="Hostel B Mess">Hostel B Mess</option>
+            <option value="Hostel C Cafeteria">Hostel C Cafeteria</option>
+            <option value="Event Hall">Event Hall</option>
+            <option value="Auditorium">Auditorium</option>
+            <option value="Faculty Lounge">Faculty Lounge</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold mb-2 text-gray-700">Sort By</label>
+          <select id="sortBy" class="w-full">
+            <option value="newest">Newest First</option>
+            <option value="urgent">Most Urgent</option>
+            <option value="quantity">Highest Quantity</option>
+            <option value="rating">Highest Rated</option>
+          </select>
+        </div>
+      </div>
+      <!-- Added category filter buttons -->
+      <div class="flex gap-2 flex-wrap">
+        <button class="category-filter-btn active" data-category="all">All Categories</button>
+        <button class="category-filter-btn" data-category="indian">🍛 Indian</button>
+        <button class="category-filter-btn" data-category="chinese">🥢 Chinese</button>
+        <button class="category-filter-btn" data-category="continental">🍝 Continental</button>
+        <button class="category-filter-btn" data-category="snacks">🍪 Snacks</button>
+        <button class="category-filter-btn" data-category="desserts">🍰 Desserts</button>
+      </div>
+    </div>
+
+    <!-- Dynamic listings grid populated from localStorage -->
+    <main class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-12" id="listingsGrid">
+      <!-- Listings will be populated by JavaScript -->
+    </main>
+
+    <!-- Enhanced no listings message -->
+    <div class="no-listings text-center py-12 hidden" id="noListings">
+      <div class="text-6xl mb-4">🔍</div>
+      <h3 class="text-xl font-semibold text-gray-700 mb-2">No Listings Found</h3>
+      <p class="text-gray-500 mb-6">No surplus food matches your current filters. Try adjusting your search criteria.</p>
+      <a href="add.html" class="btn btn-primary">Add New Listing</a>
+    </div>
+  </div>
+
+  <!-- Enhanced modal with more details and better styling -->
+  <div id="claimModal" class="modal">
+    <div class="modal-content max-w-md mx-auto">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">🚚</span>
+        <h3 id="modalTitle" class="text-xl font-bold">Claim Food</h3>
+      </div>
+      <div id="modalDetails" class="space-y-3 mb-6">
+        <!-- Filled by JavaScript -->
+      </div>
+      <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-400 rounded-lg p-4 mb-6">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xl">⚠️</span>
+          <h4 class="font-bold text-yellow-800">Pickup Instructions</h4>
+        </div>
+        <ul class="text-sm text-yellow-700 space-y-1">
+          <li>• Bring your own container for food safety</li>
+          <li>• Arrive within the specified pickup time</li>
+          <li>• Contact the provider if you're running late</li>
+          <li>• Show this confirmation to the food provider</li>
+        </ul>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="confirmClaim()" class="btn btn-success flex-1">✅ Confirm Claim</button>
+        <button onclick="closeModal()" class="btn btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enhanced footer to match other pages -->
+  <footer class="bg-gradient-to-r from-green-700 via-teal-600 to-blue-600 text-white text-center p-6 mt-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-lg font-semibold mb-2">🌱 Smart Food Share © 2025 — Kolkata Campus</p>
+      <p class="text-sm opacity-80">Together for a Zero-Waste Future</p>
+    </div>
+  </footer>
+
+  <script>
+    function read(key, fallback) {
+      try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+    }
+
+    function write(key, val) {
+      localStorage.setItem(key, JSON.stringify(val));
+    }
+
+    let currentClaimListing = null;
+
+    function minsLeft(listing) {
+      const expireAt = listing.createdAt + listing.safeHours * 60 * 60 * 1000;
+      return Math.max(0, Math.floor((expireAt - Date.now()) / 60000));
+    }
+
+    function isActive(listing) {
+      return minsLeft(listing) > 0;
+    }
+
+    function getUrgencyLevel(listing) {
+      const mins = minsLeft(listing);
+      if (mins > 240) return 'fresh';
+      if (mins > 120) return 'good';
+      return 'urgent';
+    }
+
+    function getUrgencyClass(urgency) {
+      switch(urgency) {
+        case 'fresh': return 'bg-green-100 text-green-800';
+        case 'good': return 'bg-yellow-100 text-yellow-800';
+        case 'urgent': return 'bg-red-100 text-red-800';
+        default: return 'bg-gray-100 text-gray-800';
+      }
+    }
+
+    function createListingCard(listing) {
+      const urgency = getUrgencyLevel(listing);
+      const mins = minsLeft(listing);
+      const hours = Math.floor(mins / 60);
+      const remainingMins = mins % 60;
+      const timeText = hours > 0 ? `${hours}h ${remainingMins}m` : `${mins}m`;
+
+      return `
+        <div class="card hover:scale-105 transition-transform relative overflow-hidden" data-type="${listing.type}" data-location="${listing.location}" data-category="${listing.category || 'indian'}">
+          <!-- Food image with overlay badges -->
+          <div class="relative mb-4">
+            <img src="${listing.image || '/placeholder.svg?height=200&width=300&query=' + listing.title}" alt="${listing.title}" class="w-full h-48 object-cover rounded-lg">
+            <div class="absolute top-2 left-2">
+              <span class="px-2 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-semibold ${listing.type === 'Veg' ? 'text-green-600' : 'text-red-600'}">
+                ${listing.type === 'Veg' ? '🥗' : '🍖'} ${listing.type}
+              </span>
+            </div>
+            <div class="absolute top-2 right-2">
+              <span class="px-2 py-1 ${getUrgencyClass(urgency)} backdrop-blur-sm rounded-full text-xs font-semibold">
+                ${timeText} left
+              </span>
+            </div>
+            <div class="absolute bottom-2 left-2">
+              <span class="px-2 py-1 bg-black/70 text-white backdrop-blur-sm rounded-full text-xs">
+                ⭐ ${listing.rating || '4.5'}
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2">
+              <span class="px-2 py-1 bg-blue-500/80 text-white backdrop-blur-sm rounded-full text-xs font-semibold">
+                ${listing.quantity} portions
+              </span>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <h3 class="text-lg font-bold text-gray-800 mb-1">${listing.title}</h3>
+              <p class="text-sm text-gray-600">${listing.category || 'Indian'} • ${listing.location}</p>
+            </div>
+
+            <div class="flex items-center gap-2 text-sm text-gray-600">
+              <span>📍</span>
+              <span>${listing.location}</span>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-3">
+              <div class="flex items-center justify-between text-sm mb-2">
+                <span class="text-gray-600">Available until:</span>
+                <span class="font-semibold ${urgency === 'urgent' ? 'text-red-600' : 'text-gray-800'}">
+                  ${new Date(listing.createdAt + listing.safeHours * 60 * 60 * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                </span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-gray-600">Contact:</span>
+                <span class="font-medium">${listing.contact}</span>
+              </div>
+            </div>
+
+            <button onclick="openModal('${listing.id}')" class="btn btn-primary w-full">
+              🚚 Claim Now
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderListings() {
+      let listings = read('listings', []).filter(isActive);
+      
+      // Apply filters
+      const searchFilter = document.getElementById('searchInput').value.toLowerCase();
+      const typeFilter = document.getElementById('typeFilter').value;
+      const locationFilter = document.getElementById('locationFilter').value;
+      const categoryFilter = document.querySelector('.category-filter-btn.active').dataset.category;
+
+      listings = listings.filter(listing => {
+        const matchesSearch = !searchFilter || 
+          listing.title.toLowerCase().includes(searchFilter) ||
+          listing.location.toLowerCase().includes(searchFilter);
+        const matchesType = !typeFilter || listing.type === typeFilter;
+        const matchesLocation = !locationFilter || listing.location === locationFilter;
+        const matchesCategory = categoryFilter === 'all' || (listing.category || 'indian') === categoryFilter;
+
+        return matchesSearch && matchesType && matchesLocation && matchesCategory;
+      });
+
+      // Apply sorting
+      const sortBy = document.getElementById('sortBy').value;
+      listings.sort((a, b) => {
+        switch(sortBy) {
+          case 'newest': return b.createdAt - a.createdAt;
+          case 'urgent': return minsLeft(a) - minsLeft(b);
+          case 'quantity': return (b.quantity || 0) - (a.quantity || 0);
+          case 'rating': return (b.rating || 0) - (a.rating || 0);
+          default: return 0;
+        }
+      });
+
+      const grid = document.getElementById('listingsGrid');
+      const noListings = document.getElementById('noListings');
+      
+      if (listings.length === 0) {
+        grid.classList.add('hidden');
+        noListings.classList.remove('hidden');
+      } else {
+        grid.classList.remove('hidden');
+        noListings.classList.add('hidden');
+        grid.innerHTML = listings.map(createListingCard).join('');
+      }
+
+      updateStats(listings);
+    }
+
+    function updateStats(listings) {
+      const totalListings = listings.length;
+      const totalPortions = listings.reduce((sum, listing) => sum + (listing.quantity || 0), 0);
+      const urgentCount = listings.filter(listing => getUrgencyLevel(listing) === 'urgent').length;
+
+      document.getElementById('liveListings').textContent = totalListings;
+      document.getElementById('totalPortions').textContent = totalPortions;
+      document.getElementById('urgentCount').textContent = urgentCount;
+    }
+
+    function openModal(listingId) {
+      const listings = read('listings', []);
+      const listing = listings.find(l => l.id === listingId);
+      if (!listing) return;
+
+      currentClaimListing = listing;
+      
+      document.getElementById("modalTitle").textContent = `Claim: ${listing.title}`;
+      document.getElementById("modalDetails").innerHTML = `
+        <div class="flex items-center gap-3">
+          <img src="${listing.image || '/placeholder.svg?height=100&width=100&query=' + listing.title}" alt="${listing.title}" class="w-16 h-16 rounded-lg object-cover">
+          <div>
+            <h4 class="font-semibold">${listing.title}</h4>
+            <p class="text-sm text-gray-600">${listing.type} • ${listing.quantity} portions</p>
+            <p class="text-sm text-gray-600">⭐ ${listing.rating || '4.5'} rating</p>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-lg p-3">
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div>
+              <span class="text-gray-600">Location:</span>
+              <p class="font-medium">${listing.location}</p>
+            </div>
+            <div>
+              <span class="text-gray-600">Contact:</span>
+              <p class="font-medium">${listing.contact}</p>
+            </div>
+            <div>
+              <span class="text-gray-600">Available until:</span>
+              <p class="font-medium">${new Date(listing.createdAt + listing.safeHours * 60 * 60 * 1000).toLocaleString()}</p>
+            </div>
+            <div>
+              <span class="text-gray-600">Time left:</span>
+              <p class="font-medium text-orange-600">${Math.floor(minsLeft(listing) / 60)}h ${minsLeft(listing) % 60}m</p>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      document.getElementById("claimModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("claimModal").style.display = "none";
+      currentClaimListing = null;
+    }
+
+    function confirmClaim() {
+      if (!currentClaimListing) return;
+
+      // Add to claims
+      const claims = read('claims', []);
+      claims.push({
+        listingId: currentClaimListing.id,
+        user: 'Current User',
+        at: Date.now(),
+        listing: currentClaimListing
+      });
+      write('claims', claims);
+
+      // Add notification
+      const notifications = read('notifications', []);
+      notifications.unshift({
+        id: crypto.randomUUID(),
+        msg: `✅ You claimed "${currentClaimListing.title}" from ${currentClaimListing.location}`,
+        ts: Date.now()
+      });
+      write('notifications', notifications);
+
+      showNotification(`✅ Successfully claimed "${currentClaimListing.title}"! Check your email for pickup details.`, 'success');
+      closeModal();
+      renderListings();
+    }
+
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 text-white ${
+        type === 'success' ? 'bg-green-500' : 
+        type === 'error' ? 'bg-red-500' : 'bg-blue-500'
+      }`;
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => notification.remove(), 4000);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      renderListings();
+
+      // Add event listeners
+      document.getElementById('searchInput').addEventListener('input', renderListings);
+      document.getElementById('typeFilter').addEventListener('change', renderListings);
+      document.getElementById('locationFilter').addEventListener('change', renderListings);
+      document.getElementById('sortBy').addEventListener('change', renderListings);
+
+      document.getElementById('clearFilters').addEventListener('click', () => {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('typeFilter').value = '';
+        document.getElementById('locationFilter').value = '';
+        document.getElementById('sortBy').value = 'newest';
+        document.querySelectorAll('.category-filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelector('[data-category="all"]').classList.add('active');
+        renderListings();
+      });
+
+      document.querySelectorAll('.category-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.category-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderListings();
+        });
+      });
+
+      // Auto-refresh every 30 seconds
+      setInterval(renderListings, 30000);
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      const modal = document.getElementById('claimModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

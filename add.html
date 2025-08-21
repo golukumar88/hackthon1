@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Listing — Smart Food Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Add surplus food to help reduce waste">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>➕</text></svg>">
+</head>
+<body class="bg-gray-50">
+  <header class="bg-gradient-to-r from-green-600 via-teal-500 to-blue-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold flex items-center gap-2">
+        <span class="animate-pulse">➕</span> Add Surplus Food
+      </h1>
+      <nav class="space-x-4 text-sm">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+        <a href="add.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Add</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="bg-white shadow-sm border-b">
+    <div class="max-w-4xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+            <span class="text-sm font-medium text-blue-600">Food Details</span>
+          </div>
+          <div class="w-12 h-0.5 bg-gray-300"></div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-bold">2</div>
+            <span class="text-sm text-gray-500">Safety & Contact</span>
+          </div>
+          <div class="w-12 h-0.5 bg-gray-300"></div>
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-bold">3</div>
+            <span class="text-sm text-gray-500">Review & Submit</span>
+          </div>
+        </div>
+        <div class="text-sm text-gray-500">
+          <span id="formProgress">Step 1 of 3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-10">
+    <div class="grid md:grid-cols-3 gap-4 mb-8">
+      <button class="quick-add-btn" data-preset="biryani">
+        <img src="/placeholder.svg?height=60&width=60" class="w-12 h-12 rounded-full object-cover">
+        <div>
+          <h4 class="font-semibold">Quick Add Biryani</h4>
+          <p class="text-xs text-gray-500">Pre-filled template</p>
+        </div>
+      </button>
+      <button class="quick-add-btn" data-preset="pizza">
+        <img src="/placeholder.svg?height=60&width=60" class="w-12 h-12 rounded-full object-cover">
+        <div>
+          <h4 class="font-semibold">Quick Add Pizza</h4>
+          <p class="text-xs text-gray-500">Pre-filled template</p>
+        </div>
+      </button>
+      <button class="quick-add-btn" data-preset="thali">
+        <img src="/placeholder.svg?height=60&width=60" class="w-12 h-12 rounded-full object-cover">
+        <div>
+          <h4 class="font-semibold">Quick Add Thali</h4>
+          <p class="text-xs text-gray-500">Pre-filled template</p>
+        </div>
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">🍽️</span>
+        <div>
+          <h3 class="text-2xl font-bold">Log New Surplus Food</h3>
+          <p class="text-gray-600">Fill details below. This will notify students/NGOs and appear in Listings.</p>
+        </div>
+      </div>
+
+      <form id="f" class="mt-6">
+        <div id="step1" class="form-step space-y-6">
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-gray-700">Food Title *</label>
+              <input id="title" type="text" class="w-full" placeholder="e.g., Paneer Butter Masala" required>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-gray-700">Type *</label>
+              <select id="type" class="w-full" required>
+                <option value="">Select type...</option>
+                <option>Veg</option>
+                <option>Non-Veg</option>
+                <option>Snacks</option>
+                <option>Sweets</option>
+                <option>Beverages</option>
+                <option>Fruits</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-3 text-gray-700">Food Category</label>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="categoryGrid">
+              <div class="category-card" data-category="indian">
+                <img src="/placeholder.svg?height=80&width=80" class="w-16 h-16 rounded-lg object-cover mx-auto mb-2">
+                <span class="text-sm font-medium">Indian</span>
+              </div>
+              <div class="category-card" data-category="chinese">
+                <img src="/placeholder.svg?height=80&width=80" class="w-16 h-16 rounded-lg object-cover mx-auto mb-2">
+                <span class="text-sm font-medium">Chinese</span>
+              </div>
+              <div class="category-card" data-category="continental">
+                <img src="/placeholder.svg?height=80&width=80" class="w-16 h-16 rounded-lg object-cover mx-auto mb-2">
+                <span class="text-sm font-medium">Continental</span>
+              </div>
+              <div class="category-card" data-category="snacks">
+                <img src="/placeholder.svg?height=80&width=80" class="w-16 h-16 rounded-lg object-cover mx-auto mb-2">
+                <span class="text-sm font-medium">Snacks</span>
+              </div>
+            </div>
+            <input type="hidden" id="category" name="category">
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-gray-700">Quantity (plates/pieces) *</label>
+              <input id="qty" type="number" min="1" max="1000" class="w-full" required>
+              <p class="text-xs text-gray-500 mt-1">💡 Estimate: 1 plate = 1 person served</p>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-gray-700">Safe for (hours) *</label>
+              <select id="safe" class="w-full">
+                <option>1</option><option>2</option><option selected>3</option><option>4</option><option>6</option><option>12</option><option>24</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="flex justify-end">
+            <button type="button" class="btn btn-primary" onclick="nextStep()">Next Step →</button>
+          </div>
+        </div>
+
+        <div id="step2" class="form-step space-y-6 hidden">
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-gray-700">Location *</label>
+              <select id="loc" class="w-full" required>
+                <option value="">Select location...</option>
+                <option>Main Canteen</option>
+                <option>Hostel A Mess</option>
+                <option>Hostel B Mess</option>
+                <option>Hostel C Cafeteria</option>
+                <option>Event Hall</option>
+                <option>Auditorium</option>
+                <option>Faculty Lounge</option>
+                <option>Library Cafe</option>
+                <option>Sports Complex</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-2 text-gray-700">Contact Email *</label>
+              <input id="contact" type="email" class="w-full" placeholder="name@campus.edu" required>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold mb-2 text-gray-700">Food Image</label>
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors" id="imageUpload">
+              <div class="space-y-2">
+                <div class="text-4xl">📸</div>
+                <div>
+                  <p class="text-sm font-medium">Click to upload or drag and drop</p>
+                  <p class="text-xs text-gray-500">PNG, JPG up to 5MB</p>
+                </div>
+                <input id="image" type="url" class="w-full mt-3" placeholder="Or paste image URL">
+              </div>
+            </div>
+            <div id="imagePreview" class="mt-4 hidden">
+              <img id="previewImg" class="w-32 h-32 object-cover rounded-lg border-2 border-gold-300" alt="Preview">
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-400 rounded-lg p-6">
+            <div class="flex items-center gap-3 mb-3">
+              <span class="text-2xl">⚠️</span>
+              <h4 class="font-bold text-yellow-800">Food Safety Guidelines</h4>
+            </div>
+            <ul class="text-sm text-yellow-700 space-y-2">
+              <li class="flex items-start gap-2">
+                <span class="text-green-600">✓</span>
+                <span>Use clean, food-grade containers for storage</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-green-600">✓</span>
+                <span>Store hot foods above 60°C; cold foods below 5°C</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-green-600">✓</span>
+                <span>Label with prep time & ingredients; follow FIFO principle</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-green-600">✓</span>
+                <span>Ensure food is fresh and hasn't been sitting out for too long</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="flex justify-between">
+            <button type="button" class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep()">Review →</button>
+          </div>
+        </div>
+
+        <div id="step3" class="form-step space-y-6 hidden">
+          <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6">
+            <h4 class="text-lg font-bold mb-4 text-gray-800">Review Your Listing</h4>
+            <div id="reviewContent" class="space-y-3">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-green-50 to-teal-50 rounded-lg p-6">
+            <h4 class="text-lg font-bold mb-4 text-green-800">Estimated Impact</h4>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="impactPreview">
+              <!-- Filled by JS -->
+            </div>
+          </div>
+
+          <div class="flex justify-between">
+            <button type="button" class="btn btn-secondary" onclick="prevStep()">← Previous</button>
+            <button class="btn btn-success text-lg px-8" type="submit">
+              <span class="loading hidden"></span>
+              <span class="btn-text">🚀 Submit Listing</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="card mt-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">📋</span>
+        <h3 class="text-xl font-semibold">Recent Submissions</h3>
+      </div>
+      <div id="recentSubmissions" class="space-y-3">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-green-700 text-white text-center p-4 mt-10">
+    🌱 Smart Food Share © 2025 — Kolkata Campus
+  </footer>
+
+  <script>
+    function read(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+    function write(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+    let currentStep = 1;
+    let selectedCategory = '';
+
+    function nextStep() {
+      if (currentStep < 3) {
+        document.getElementById(`step${currentStep}`).classList.add('hidden');
+        currentStep++;
+        document.getElementById(`step${currentStep}`).classList.remove('hidden');
+        updateProgress();
+        
+        if (currentStep === 3) {
+          updateReview();
+          updateImpactPreview();
+        }
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        document.getElementById(`step${currentStep}`).classList.add('hidden');
+        currentStep--;
+        document.getElementById(`step${currentStep}`).classList.remove('hidden');
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      document.getElementById('formProgress').textContent = `Step ${currentStep} of 3`;
+      
+      for (let i = 1; i <= 3; i++) {
+        const circle = document.querySelector(`.flex:nth-child(${i*2-1}) .w-8`);
+        const text = document.querySelector(`.flex:nth-child(${i*2-1}) span`);
+        
+        if (i <= currentStep) {
+          circle.className = 'w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold';
+          text.className = 'text-sm font-medium text-blue-600';
+        } else {
+          circle.className = 'w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-bold';
+          text.className = 'text-sm text-gray-500';
+        }
+      }
+    }
+
+    document.querySelectorAll('.category-card').forEach(card => {
+      card.addEventListener('click', function() {
+        document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+        selectedCategory = this.dataset.category;
+        document.getElementById('category').value = selectedCategory;
+      });
+    });
+
+    document.querySelectorAll('.quick-add-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const preset = this.dataset.preset;
+        applyPreset(preset);
+      });
+    });
+
+    function applyPreset(preset) {
+      const presets = {
+        biryani: {
+          title: 'Hyderabadi Biryani',
+          type: 'Non-Veg',
+          category: 'indian',
+          quantity: 10,
+          safe: 3,
+          location: 'Main Canteen'
+        },
+        pizza: {
+          title: 'Margherita Pizza',
+          type: 'Veg',
+          category: 'continental',
+          quantity: 8,
+          safe: 2,
+          location: 'Student Center'
+        },
+        thali: {
+          title: 'Vegetarian Thali',
+          type: 'Veg',
+          category: 'indian',
+          quantity: 15,
+          safe: 4,
+          location: 'Event Hall'
+        }
+      };
+
+      const data = presets[preset];
+      if (data) {
+        document.getElementById('title').value = data.title;
+        document.getElementById('type').value = data.type;
+        document.getElementById('qty').value = data.quantity;
+        document.getElementById('safe').value = data.safe;
+        document.getElementById('loc').value = data.location;
+        
+        document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+        document.querySelector(`[data-category="${data.category}"]`).classList.add('selected');
+        selectedCategory = data.category;
+        document.getElementById('category').value = selectedCategory;
+      }
+    }
+
+    function updateReview() {
+      const title = document.getElementById('title').value;
+      const type = document.getElementById('type').value;
+      const qty = document.getElementById('qty').value;
+      const safe = document.getElementById('safe').value;
+      const location = document.getElementById('loc').value;
+      const contact = document.getElementById('contact').value;
+      
+      document.getElementById('reviewContent').innerHTML = `
+        <div class="grid md:grid-cols-2 gap-4">
+          <div><strong>Food:</strong> ${title}</div>
+          <div><strong>Type:</strong> ${type}</div>
+          <div><strong>Category:</strong> ${selectedCategory || 'Not selected'}</div>
+          <div><strong>Quantity:</strong> ${qty} portions</div>
+          <div><strong>Safe for:</strong> ${safe} hours</div>
+          <div><strong>Location:</strong> ${location}</div>
+          <div><strong>Contact:</strong> ${contact}</div>
+        </div>
+      `;
+    }
+
+    function updateImpactPreview() {
+      const qty = parseInt(document.getElementById('qty').value) || 0;
+      const co2Saved = (qty * 0.3).toFixed(1);
+      const waterSaved = qty * 5;
+      const peopleFed = Math.round(qty * 0.9);
+      
+      document.getElementById('impactPreview').innerHTML = `
+        <div class="text-center">
+          <div class="text-2xl font-bold text-green-600">${peopleFed}</div>
+          <div class="text-xs text-gray-600">People Fed</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-blue-600">${co2Saved}kg</div>
+          <div class="text-xs text-gray-600">CO₂ Saved</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-teal-600">${waterSaved}L</div>
+          <div class="text-xs text-gray-600">Water Saved</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-purple-600">1</div>
+          <div class="text-xs text-gray-600">Meal Saved</div>
+        </div>
+      `;
+    }
+
+    (function prefill(){
+      const p = new URLSearchParams(location.search);
+      if (p.get('title')) document.getElementById('title').value = p.get('title');
+      if (p.get('location')) document.getElementById('loc').value = p.get('location');
+      if (p.get('type')) document.getElementById('type').value = p.get('type');
+    })();
+
+    document.getElementById('image').addEventListener('input', function() {
+      const url = this.value.trim();
+      const preview = document.getElementById('imagePreview');
+      const img = document.getElementById('previewImg');
+      
+      if (url) {
+        img.src = url;
+        img.onload = () => preview.classList.remove('hidden');
+        img.onerror = () => preview.classList.add('hidden');
+      } else {
+        preview.classList.add('hidden');
+      }
+    });
+
+    document.getElementById('f').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const loading = submitBtn.querySelector('.loading');
+      const btnText = submitBtn.querySelector('.btn-text');
+      
+      loading.classList.remove('hidden');
+      btnText.textContent = 'Submitting...';
+      submitBtn.disabled = true;
+      
+      setTimeout(() => {
+        const listing = {
+          id: crypto.randomUUID(),
+          title: document.getElementById('title').value.trim(),
+          type: document.getElementById('type').value,
+          category: selectedCategory,
+          quantity: Number(document.getElementById('qty').value),
+          safeHours: Number(document.getElementById('safe').value),
+          createdAt: Date.now(),
+          location: document.getElementById('loc').value.trim(),
+          contact: document.getElementById('contact').value.trim(),
+          image: document.getElementById('image').value.trim() || `/placeholder.svg?height=200&width=300&query=${document.getElementById('title').value.trim()}`,
+          rating: (4.0 + Math.random() * 1.0).toFixed(1)
+        };
+        
+        const listings = read('listings', []);
+        listings.unshift(listing);
+        write('listings', listings);
+
+        const notifs = read('notifications', []);
+        notifs.unshift({ 
+          id: crypto.randomUUID(), 
+          msg: `🆕 New listing: ${listing.title} at ${listing.location} (${listing.quantity} portions)`, 
+          ts: Date.now() 
+        });
+        write('notifications', notifs);
+
+        loading.classList.add('hidden');
+        btnText.textContent = '🚀 Submit Listing';
+        submitBtn.disabled = false;
+
+        showSuccessMessage();
+        
+        e.target.reset();
+        document.getElementById('imagePreview').classList.add('hidden');
+        selectedCategory = '';
+        document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+        
+        document.getElementById('step3').classList.add('hidden');
+        document.getElementById('step1').classList.remove('hidden');
+        currentStep = 1;
+        updateProgress();
+        
+        setTimeout(() => {
+          location.href = 'listings.html';
+        }, 2000);
+      }, 1500);
+    });
+
+    function showSuccessMessage() {
+      const message = document.createElement('div');
+      message.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce';
+      message.innerHTML = '✅ Listing submitted successfully!';
+      document.body.appendChild(message);
+      
+      setTimeout(() => {
+        message.remove();
+      }, 3000);
+    }
+
+    function renderRecentSubmissions() {
+      const recent = read('listings', []).slice(0, 3);
+      const container = document.getElementById('recentSubmissions');
+      
+      if (!recent.length) {
+        container.innerHTML = '<p class="text-gray-500 text-sm">No recent submissions</p>';
+        return;
+      }
+      
+      container.innerHTML = recent.map(item => `
+        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+          <img src="${item.image || '/placeholder.svg?height=60&width=60&query=' + item.title}" class="w-12 h-12 rounded-lg object-cover">
+          <div class="flex-1">
+            <h4 class="font-medium">${item.title}</h4>
+            <p class="text-sm text-gray-600">${item.location} • ${item.quantity} portions • ${item.category || 'Uncategorized'}</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-gray-500">${new Date(item.createdAt).toLocaleDateString()}</span>
+            <div class="text-xs text-green-600 font-medium">⭐ ${item.rating || '4.5'}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    renderRecentSubmissions();
+  </script>
+</body>
+</html>

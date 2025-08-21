@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pickup Map — Smart Food Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">🍽️ Smart Food Share</h1>
+      <!-- Updated navigation to include all pages -->
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add Food</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+        <a href="map.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+      </nav>
+      <div class="flex items-center space-x-3">
+        <a href="sign-in.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign In</a>
+        <a href="sign-up.html" class="bg-white text-orange-600 hover:bg-gray-100 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign Up</a>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <div class="md:hidden px-6 pb-4">
+      <div class="flex flex-wrap gap-2 text-sm">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Add</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Analytics</a>
+        <a href="map.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Feedback</a>
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 py-8">
+    <div class="card">
+      <h3>Live Pickup Locations (centered on Kolkata)</h3>
+      <iframe
+        class="mt-4 rounded-xl w-full"
+        height="420"
+        style="border:0"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Kolkata&output=embed">
+      </iframe>
+      <p class="text-xs text-gray-500 mt-2">Tip: Open a listing and click “Open in Google Maps” for exact directions.</p>
+    </div>
+
+    <div id="locList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-8"></div>
+  </main>
+
+  <footer class="bg-green-700 text-white text-center p-4 mt-10">
+    🌱 Smart Food Share © 2025 — Kolkata Campus
+  </footer>
+
+  <script>
+    function read(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+    function minsLeft(l){ return Math.max(0, Math.floor((l.createdAt + l.safeHours*3600000 - Date.now())/60000)); }
+    function isActive(l){ return minsLeft(l) > 0; }
+
+    const active = read('listings', []).filter(isActive);
+    const wrap = document.getElementById('locList');
+    if (!active.length) {
+      wrap.innerHTML = `<div class="sm:col-span-2 lg:col-span-3 text-center text-gray-500">No active pickups right now.</div>`;
+    } else {
+      wrap.innerHTML = active.map(l=>{
+        const query = encodeURIComponent(`${l.location} Kolkata`);
+        return `
+          <div class="card">
+            <h3>${l.title}</h3>
+            <p class="text-sm text-gray-600">${l.type} • Qty ${l.quantity}</p>
+            <p class="text-sm">Pickup: <b>${l.location}</b></p>
+            <a class="btn mt-3" target="_blank" href="https://www.google.com/maps/search/?api=1&query=${query}">Open in Google Maps</a>
+          </div>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

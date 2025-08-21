@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Food Share — Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Smart Food Share - Zero Waste Campus Initiative">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+</head>
+<body class="bg-gray-200">
+
+  <!-- Updated header with golden theme and enhanced navigation -->
+  <header class="bg-gradient-to-r from-green-600 via-teal-500 to-blue-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold flex items-center gap-2">
+        <span class="animate-pulse">🌍</span> Zero Waste Squad
+      </h1>
+      <nav class="space-x-4 text-sm">
+        <a href="index.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+        <!-- Added sign-in and sign-up navigation links -->
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Sign Up</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Enhanced hero section with golden gradient -->
+  <section class="bg-gradient-to-r from-orange-500 via-pink-500 to-purple-500 text-white py-12 text-center shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/10"></div>
+    <!-- Added floating food images for visual appeal -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute top-10 left-10 w-16 h-16 rounded-full opacity-20 animate-bounce" style="animation-delay: 0s;">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute top-20 right-20 w-12 h-12 rounded-full opacity-20 animate-bounce" style="animation-delay: 1s;">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute bottom-20 left-20 w-14 h-14 rounded-full opacity-20 animate-bounce" style="animation-delay: 2s;">
+      <img src="/placeholder.svg?height=80&width=80" class="absolute bottom-10 right-10 w-18 h-18 rounded-full opacity-20 animate-bounce" style="animation-delay: 1.5s;">
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <h2 class="text-4xl font-bold mb-4 animate-pulse">Zero-Waste Campus: Rescue • Redistribute • Reduce</h2>
+      <p class="mt-2 opacity-90 text-lg">List surplus food from canteens, hostels & events — notify students/NGOs — track real impact.</p>
+      <!-- Added food category quick filters -->
+      <div class="mt-4 flex justify-center gap-2 flex-wrap">
+        <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">🍛 Indian</span>
+        <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">🍕 Fast Food</span>
+        <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">🥗 Healthy</span>
+        <span class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm">🍰 Desserts</span>
+      </div>
+      <div class="mt-6 space-x-4">
+        <a href="add.html" class="btn btn-warning text-lg px-6 py-3">+ Log Surplus Food</a>
+        <a href="listings.html" class="btn btn-success text-lg px-6 py-3">🍲 View Listings</a>
+      </div>
+      <!-- Enhanced live stats with more details -->
+      <div class="mt-6 bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 inline-block">
+        <span class="text-sm">🔥 Live: <span id="liveStats">Loading...</span> | 🌱 <span id="impactStats">Loading impact...</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enhanced main content with better layout -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <div id="stats" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <!-- Filled by JS -->
+    </div>
+
+    <!-- Enhanced quick actions with food images and more features -->
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+      <div class="card hover:scale-105 transition-transform relative overflow-hidden">
+        <img src="/placeholder.svg?height=200&width=300" class="absolute top-0 right-0 w-20 h-20 object-cover rounded-bl-3xl opacity-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-3xl">⚡</span>
+          <h3 class="text-xl font-bold">Quick Log</h3>
+        </div>
+        <p class="text-gray-600 mb-4">Just had an event? Log surplus food in 30 seconds with photo upload.</p>
+        <div class="mb-3 text-sm text-gray-500">📸 Photo • 📍 Location • ⏰ Timer</div>
+        <a href="add.html" class="btn btn-warning w-full">Log Now</a>
+      </div>
+      <div class="card hover:scale-105 transition-transform relative overflow-hidden">
+        <img src="/placeholder.svg?height=200&width=300" class="absolute top-0 right-0 w-20 h-20 object-cover rounded-bl-3xl opacity-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-3xl">🗺️</span>
+          <h3 class="text-xl font-bold">Smart Map</h3>
+        </div>
+        <p class="text-gray-600 mb-4">Find nearest pickup points with real-time availability and directions.</p>
+        <div class="mb-3 text-sm text-gray-500">🚶 Walking • 🚲 Cycling • 🚗 Driving</div>
+        <a href="map.html" class="btn btn-info w-full">Open Map</a>
+      </div>
+      <div class="card hover:scale-105 transition-transform relative overflow-hidden">
+        <img src="/placeholder.svg?height=200&width=300" class="absolute top-0 right-0 w-20 h-20 object-cover rounded-bl-3xl opacity-10">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="text-3xl">🏆</span>
+          <h3 class="text-xl font-bold">Leaderboard</h3>
+        </div>
+        <p class="text-gray-600 mb-4">Top hostels & canteens who saved the most food this month.</p>
+        <div class="mb-3 text-sm text-gray-500">🥇 Rankings • 📊 Stats • 🎖️ Badges</div>
+        <a href="leaderboard.html" class="btn btn-success w-full">View Rankings</a>
+      </div>
+    </div>
+
+    <!-- Enhanced recent notifications with golden styling -->
+    <div class="card mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl animate-bounce">🔔</span>
+        <h3 class="text-xl font-semibold">Recent Notifications</h3>
+        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full" id="notifCount">0</span>
+      </div>
+      <div id="notifWrap" class="space-y-3">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added trending section -->
+    <div class="card">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">📈</span>
+        <h3 class="text-xl font-semibold">Trending This Week</h3>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="trending">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added featured food section with images -->
+    <div class="card mb-10">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">⭐</span>
+        <h3 class="text-xl font-semibold">Featured Available Food</h3>
+        <span class="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full">Live</span>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" id="featuredFood">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Enhanced footer with social links -->
+  <footer class="bg-gradient-to-r from-green-700 via-teal-600 to-blue-600 text-white text-center p-6 mt-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-lg font-semibold mb-2">🌱 Smart Food Share © 2025 — Kolkata Campus</p>
+      <p class="text-sm opacity-80">Together for a Zero-Waste Future</p>
+      <div class="mt-4 flex justify-center space-x-4">
+        <a href="#" class="hover:text-yellow-300 transition-colors">📧 Contact</a>
+        <a href="#" class="hover:text-yellow-300 transition-colors">📱 App</a>
+        <a href="#" class="hover:text-yellow-300 transition-colors">🐦 Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Added floating action button -->
+  <button class="fab" onclick="window.location.href='add.html'" title="Quick Add Food">
+    +
+  </button>
+
+  <script>
+    // --- Utilities ---
+    function read(key, fallback) {
+      try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
+    }
+    function write(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+    // Seed demo data (only once)
+    (function seed() {
+      const seeded = read('__seeded__', false);
+      if (seeded) return;
+
+      const listings = [
+        {
+          id: crypto.randomUUID(),
+          title: "Hyderabadi Biryani",
+          type: "Non-Veg",
+          quantity: 12,
+          safeHours: 3,
+          createdAt: Date.now() - 20 * 60 * 1000,
+          location: "Main Canteen",
+          image: "/placeholder.svg?height=200&width=300",
+          contact: "canteen@campus.edu",
+          category: "Indian",
+          rating: 4.8
+        },
+        {
+          id: crypto.randomUUID(),
+          title: "Paneer Butter Masala",
+          type: "Veg",
+          quantity: 8,
+          safeHours: 2,
+          createdAt: Date.now() - 10 * 60 * 1000,
+          location: "Hostel C Cafeteria",
+          image: "/placeholder.svg?height=200&width=300",
+          contact: "hostelc@campus.edu",
+          category: "Indian",
+          rating: 4.6
+        },
+        {
+          id: crypto.randomUUID(),
+          title: "Vegetarian Thali",
+          type: "Veg",
+          quantity: 15,
+          safeHours: 4,
+          createdAt: Date.now() - 55 * 60 * 1000,
+          location: "Auditorium (Event Hall)",
+          image: "/placeholder.svg?height=200&width=300",
+          contact: "events@campus.edu",
+          category: "Indian",
+          rating: 4.7
+        },
+        {
+          id: crypto.randomUUID(),
+          title: "Margherita Pizza",
+          type: "Veg",
+          quantity: 6,
+          safeHours: 2,
+          createdAt: Date.now() - 30 * 60 * 1000,
+          location: "Student Center",
+          image: "/placeholder.svg?height=200&width=300",
+          contact: "center@campus.edu",
+          category: "Fast Food",
+          rating: 4.5
+        }
+      ];
+      write('listings', listings);
+      write('notifications', [
+        { id: crypto.randomUUID(), msg: "New: 15 Veg Thali at Auditorium", ts: Date.now() - 2*60*1000 },
+        { id: crypto.randomUUID(), msg: "Urgent: Biryani expiring soon at Main Canteen", ts: Date.now() - 6*60*1000 },
+      ]);
+      write('claims', []);       // {listingId, user:"Student", at}
+      write('__seeded__', true);
+    })();
+
+    // --- Stats ---
+    function minsLeft(listing) {
+      const expireAt = listing.createdAt + listing.safeHours*60*60*1000;
+      return Math.max(0, Math.floor((expireAt - Date.now())/60000));
+    }
+    function isActive(listing) { return minsLeft(listing) > 0; }
+
+    function computeStats() {
+      const listings = read('listings', []).filter(isActive);
+      const totalPlates = listings.reduce((a,l)=>a + Number(l.quantity||0), 0);
+      const peopleFed = Math.round(totalPlates * 0.9); // approx
+      const waterSavedL = totalPlates * 5;             // simple demo metric
+      const co2SavedKg = (totalPlates * 0.3).toFixed(1);
+
+      return { totalPlates, peopleFed, waterSavedL, co2SavedKg, active: listings.length };
+    }
+
+    function renderStats() {
+      const s = computeStats();
+      const el = document.getElementById('stats');
+      el.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-number" data-count="${s.totalPlates}">0</div>
+          <h3 class="text-lg font-semibold">Total Food Saved</h3>
+          <p class="text-sm opacity-80">plates rescued</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="${s.peopleFed}">0</div>
+          <h3 class="text-lg font-semibold">People Fed</h3>
+          <p class="text-sm opacity-80">estimated impact</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="${s.co2SavedKg}">0</div>
+          <h3 class="text-lg font-semibold">CO₂ Avoided</h3>
+          <p class="text-sm opacity-80">kg saved</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="${s.waterSavedL}">0</div>
+          <h3 class="text-lg font-semibold">Water Saved</h3>
+          <p class="text-sm opacity-80">liters conserved</p>
+        </div>
+      `;
+      
+      animateCounters();
+    }
+
+    function animateCounters() {
+      document.querySelectorAll('.stat-number').forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        let current = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.floor(current);
+          }
+        }, 30);
+      });
+    }
+
+    // --- Notifications ---
+    function renderNotifications() {
+      const list = read('notifications', []).slice(0,5);
+      const wrap = document.getElementById('notifWrap');
+      const count = document.getElementById('notifCount');
+      
+      count.textContent = list.length;
+      
+      if (!list.length) {
+        wrap.innerHTML = `<div class="notification"><p class="text-sm text-gray-500">No new notifications</p></div>`;
+        return;
+      }
+      wrap.innerHTML = list.map(n => `
+        <div class="notification">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">🔔</span>
+            <div class="flex-1">
+              <p class="text-sm font-medium">${n.msg}</p>
+              <p class="text-xs text-gray-500 mt-1">${new Date(n.ts).toLocaleString()}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderTrending() {
+      const trending = [
+        { icon: '🍕', name: 'Pizza Slices', count: 45, trend: '+12%' },
+        { icon: '🍛', name: 'Rice Bowls', count: 38, trend: '+8%' },
+        { icon: '🥪', name: 'Sandwiches', count: 29, trend: '+15%' }
+      ];
+      
+      document.getElementById('trending').innerHTML = trending.map(item => `
+        <div class="bg-gradient-to-r from-purple-100 to-pink-100 p-4 rounded-xl">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${item.icon}</span>
+            <div>
+              <h4 class="font-semibold">${item.name}</h4>
+              <p class="text-sm text-gray-600">${item.count} saved</p>
+              <span class="text-xs text-green-600 font-medium">${item.trend}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderFeaturedFood() {
+      const listings = read('listings', []).filter(isActive).slice(0, 3);
+      const el = document.getElementById('featuredFood');
+      
+      if (!listings.length) {
+        el.innerHTML = '<div class="col-span-full text-center text-gray-500 py-8">No featured food available right now</div>';
+        return;
+      }
+      
+      el.innerHTML = listings.map(item => `
+        <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-4 rounded-xl border border-yellow-200 hover:shadow-lg transition-all">
+          <img src="${item.image}" alt="${item.title}" class="w-full h-32 object-cover rounded-lg mb-3">
+          <div class="flex items-center gap-2 mb-2">
+            <h4 class="font-semibold text-gray-800">${item.title}</h4>
+            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">${item.type}</span>
+          </div>
+          <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+            <span>📍 ${item.location}</span>
+            <span>⭐ ${item.rating}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium">${item.quantity} portions</span>
+            <span class="text-xs text-orange-600">${minsLeft(item)} mins left</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateLiveStats() {
+      const stats = computeStats();
+      document.getElementById('liveStats').textContent = 
+        `${stats.active} active listings • ${stats.totalPlates} plates available`;
+    }
+
+    function updateImpactStats() {
+      const stats = computeStats();
+      const impact = `${stats.co2SavedKg}kg CO₂ saved • ${stats.waterSavedL}L water conserved`;
+      document.getElementById('impactStats').textContent = impact;
+    }
+
+    // Initialize enhanced features
+    renderStats();
+    renderNotifications();
+    renderTrending();
+    renderFeaturedFood();
+    updateLiveStats();
+    updateImpactStats();
+
+    setInterval(() => { 
+      renderStats(); 
+      updateLiveStats();
+      updateImpactStats();
+      renderFeaturedFood();
+    }, 15000);
+    
+    setInterval(renderNotifications, 30000);
+  </script>
+</body>
+</html>

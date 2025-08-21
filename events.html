@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events — Smart Food Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Campus events and food surplus opportunities">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📅</text></svg>">
+</head>
+<body class="bg-gray-50">
+  <!-- Updated header to match standardized navigation across all pages -->
+  <header class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">🍽️ Smart Food Share</h1>
+      <!-- Updated navigation to include all pages -->
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add Food</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+        <a href="events.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+      </nav>
+      <div class="flex items-center space-x-3">
+        <a href="sign-in.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign In</a>
+        <a href="sign-up.html" class="bg-white text-orange-600 hover:bg-gray-100 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign Up</a>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <div class="md:hidden px-6 pb-4">
+      <div class="flex flex-wrap gap-2 text-sm">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Add</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Leaderboard</a>
+        <a href="events.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Feedback</a>
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Added enhanced hero section with event statistics and floating elements -->
+  <section class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-12 text-center shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/10"></div>
+    <!-- Added floating event icons -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-10 left-10 w-16 h-16 bg-white/10 rounded-full flex items-center justify-center text-2xl animate-bounce" style="animation-delay: 0s;">📅</div>
+      <div class="absolute top-20 right-20 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-xl animate-bounce" style="animation-delay: 1s;">🎉</div>
+      <div class="absolute bottom-20 left-20 w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-xl animate-bounce" style="animation-delay: 2s;">🍽️</div>
+      <div class="absolute bottom-10 right-10 w-18 h-18 bg-white/10 rounded-full flex items-center justify-center text-2xl animate-bounce" style="animation-delay: 1.5s;">🎪</div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <h2 class="text-4xl font-bold mb-4">Campus Events & Food Opportunities</h2>
+      <p class="opacity-90 text-lg mb-6">Stay updated with campus events and help reduce food waste by logging surplus food</p>
+      <!-- Added event filter buttons -->
+      <div class="flex justify-center gap-2 mb-4">
+        <button class="event-filter-btn active" data-filter="all">All Events</button>
+        <button class="event-filter-btn" data-filter="today">Today</button>
+        <button class="event-filter-btn" data-filter="upcoming">Upcoming</button>
+        <button class="event-filter-btn" data-filter="food-available">Food Available</button>
+      </div>
+      <div class="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 inline-block">
+        <span class="text-sm">📊 <span id="eventStats">Loading...</span></span>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <!-- Added quick actions section -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">⚡</span>
+        <h3 class="text-xl font-semibold">Quick Actions</h3>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4">
+        <button class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg hover:shadow-lg transition-all" onclick="window.location.href='add.html'">
+          <div class="text-2xl mb-2">➕</div>
+          <div class="font-semibold">Add Event Food</div>
+          <div class="text-sm opacity-90">Log surplus from events</div>
+        </button>
+        <button class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-lg hover:shadow-lg transition-all" onclick="showCreateEventModal()">
+          <div class="text-2xl mb-2">📅</div>
+          <div class="font-semibold">Create Event</div>
+          <div class="text-sm opacity-90">Add new campus event</div>
+        </button>
+        <button class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-lg hover:shadow-lg transition-all" onclick="showNotificationSettings()">
+          <div class="text-2xl mb-2">🔔</div>
+          <div class="font-semibold">Notifications</div>
+          <div class="text-sm opacity-90">Event alerts & reminders</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Enhanced events grid with better styling and more information -->
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-2xl font-bold text-gray-800">Campus Events</h3>
+      <div class="flex items-center gap-3">
+        <select id="sortEvents" class="text-sm border border-gray-300 rounded-lg px-3 py-2">
+          <option value="date">Sort by Date</option>
+          <option value="location">Sort by Location</option>
+          <option value="food-potential">Sort by Food Potential</option>
+        </select>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600 transition-colors" onclick="refreshEvents()">
+          🔄 Refresh
+        </button>
+      </div>
+    </div>
+    
+    <div id="evGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"></div>
+
+    <!-- Added upcoming events calendar section -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">📅</span>
+        <h3 class="text-xl font-semibold">This Week's Schedule</h3>
+      </div>
+      <div class="grid md:grid-cols-7 gap-2" id="weeklyCalendar">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added event statistics and impact section -->
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">📊</span>
+          <h3 class="text-xl font-semibold">Event Impact</h3>
+        </div>
+        <div class="space-y-4" id="eventImpact">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">🏆</span>
+          <h3 class="text-xl font-semibold">Top Event Locations</h3>
+        </div>
+        <div class="space-y-3" id="topEventLocations">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Enhanced footer to match other pages -->
+  <footer class="bg-gradient-to-r from-green-700 via-teal-600 to-blue-600 text-white text-center p-6 mt-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-lg font-semibold mb-2">🌱 Smart Food Share © 2025 — Kolkata Campus</p>
+      <p class="text-sm opacity-80">Together for a Zero-Waste Future</p>
+    </div>
+  </footer>
+
+  <!-- Added modal for creating new events -->
+  <div id="createEventModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-xl font-bold">Create New Event</h3>
+        <button onclick="hideCreateEventModal()" class="text-gray-500 hover:text-gray-700">✕</button>
+      </div>
+      <form id="createEventForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Event Name</label>
+          <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="e.g., Tech Seminar">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Location</label>
+          <input type="text" class="w-full border border-gray-300 rounded-lg px-3 py-2" placeholder="e.g., Auditorium">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Date & Time</label>
+          <input type="datetime-local" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Expected Food Type</label>
+          <select class="w-full border border-gray-300 rounded-lg px-3 py-2">
+            <option>Veg</option>
+            <option>Non-Veg</option>
+            <option>Snacks</option>
+            <option>Sweets</option>
+            <option>Beverages</option>
+          </select>
+        </div>
+        <div class="flex gap-3 pt-4">
+          <button type="button" onclick="hideCreateEventModal()" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition-colors">Cancel</button>
+          <button type="submit" class="flex-1 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">Create Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function read(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+    function save(key, data){ localStorage.setItem(key, JSON.stringify(data)); }
+
+    let currentFilter = 'all';
+
+    const events = [
+      { 
+        title: "Tech Seminar", 
+        location: "Auditorium (Event Hall)", 
+        type: "Veg", 
+        hint: "Sandwiches, Snacks",
+        date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000),
+        attendees: 150,
+        foodPotential: "High",
+        image: "/placeholder.svg?height=200&width=300"
+      },
+      { 
+        title: "Cultural Fest Stall 7", 
+        location: "Main Ground", 
+        type: "Snacks", 
+        hint: "Chaat, Samosa",
+        date: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+        attendees: 300,
+        foodPotential: "Very High",
+        image: "/placeholder.svg?height=200&width=300"
+      },
+      { 
+        title: "Placement Drive Lunch", 
+        location: "Main Canteen", 
+        type: "Veg", 
+        hint: "Thali",
+        date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        attendees: 80,
+        foodPotential: "Medium",
+        image: "/placeholder.svg?height=200&width=300"
+      },
+      { 
+        title: "Workshop Tea Break", 
+        location: "Library Cafe", 
+        type: "Sweets", 
+        hint: "Cookies, Pastry",
+        date: new Date(),
+        attendees: 50,
+        foodPotential: "Low",
+        image: "/placeholder.svg?height=200&width=300"
+      },
+      { 
+        title: "Sports Meet Refreshments", 
+        location: "Sports Complex", 
+        type: "Snacks", 
+        hint: "Fruit bowls",
+        date: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000),
+        attendees: 200,
+        foodPotential: "High",
+        image: "/placeholder.svg?height=200&width=300"
+      },
+      { 
+        title: "Dept. Farewell", 
+        location: "Hostel C Cafeteria", 
+        type: "Veg", 
+        hint: "Paneer curry",
+        date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
+        attendees: 120,
+        foodPotential: "High",
+        image: "/placeholder.svg?height=200&width=300"
+      },
+    ];
+
+    function getPotentialColor(potential) {
+      switch(potential) {
+        case 'Very High': return 'text-red-600 bg-red-100';
+        case 'High': return 'text-orange-600 bg-orange-100';
+        case 'Medium': return 'text-yellow-600 bg-yellow-100';
+        case 'Low': return 'text-green-600 bg-green-100';
+        default: return 'text-gray-600 bg-gray-100';
+      }
+    }
+
+    function isToday(date) {
+      const today = new Date();
+      return date.toDateString() === today.toDateString();
+    }
+
+    function isUpcoming(date) {
+      return date > new Date();
+    }
+
+    function filterEvents() {
+      let filtered = events;
+      
+      switch(currentFilter) {
+        case 'today':
+          filtered = events.filter(e => isToday(e.date));
+          break;
+        case 'upcoming':
+          filtered = events.filter(e => isUpcoming(e.date));
+          break;
+        case 'food-available':
+          filtered = events.filter(e => e.foodPotential === 'High' || e.foodPotential === 'Very High');
+          break;
+      }
+      
+      return filtered;
+    }
+
+    function renderEvents() {
+      const filtered = filterEvents();
+      const grid = document.getElementById('evGrid');
+      
+      grid.innerHTML = filtered.map(ev => `
+        <div class="card hover:shadow-lg transition-all duration-300 overflow-hidden">
+          <img src="${ev.image}" alt="${ev.title}" class="w-full h-48 object-cover rounded-t-lg mb-4">
+          <div class="p-1">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="font-bold text-lg">${ev.title}</h3>
+              <span class="text-xs px-2 py-1 rounded-full ${getPotentialColor(ev.foodPotential)}">${ev.foodPotential}</span>
+            </div>
+            <div class="space-y-2 text-sm text-gray-600 mb-4">
+              <p class="flex items-center gap-2">
+                <span>📍</span> <b>${ev.location}</b>
+              </p>
+              <p class="flex items-center gap-2">
+                <span>🕒</span> ${ev.date.toLocaleDateString()} at ${ev.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+              </p>
+              <p class="flex items-center gap-2">
+                <span>👥</span> ${ev.attendees} expected attendees
+              </p>
+              <p class="flex items-center gap-2">
+                <span>🍽️</span> Likely food: <b>${ev.hint}</b>
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <a class="btn flex-1 text-center" href="add.html?title=${encodeURIComponent(ev.hint)}&location=${encodeURIComponent(ev.location)}&type=${encodeURIComponent(ev.type)}">
+                Log Surplus Food
+              </a>
+              <button class="bg-blue-500 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-600 transition-colors" onclick="setReminder('${ev.title}')">
+                🔔
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderWeeklyCalendar() {
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const today = new Date();
+      const weekStart = new Date(today);
+      weekStart.setDate(today.getDate() - today.getDay());
+
+      const calendar = document.getElementById('weeklyCalendar');
+      calendar.innerHTML = days.map((day, index) => {
+        const date = new Date(weekStart);
+        date.setDate(weekStart.getDate() + index);
+        const dayEvents = events.filter(e => e.date.toDateString() === date.toDateString());
+        
+        return `
+          <div class="p-3 border rounded-lg ${date.toDateString() === today.toDateString() ? 'bg-blue-50 border-blue-200' : 'bg-gray-50'}">
+            <div class="font-semibold text-center mb-2">${day}</div>
+            <div class="text-center text-sm text-gray-600 mb-2">${date.getDate()}</div>
+            <div class="space-y-1">
+              ${dayEvents.map(e => `
+                <div class="text-xs p-1 bg-white rounded border text-center">
+                  ${e.title.substring(0, 15)}${e.title.length > 15 ? '...' : ''}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderEventImpact() {
+      const totalEvents = events.length;
+      const todayEvents = events.filter(e => isToday(e.date)).length;
+      const upcomingEvents = events.filter(e => isUpcoming(e.date)).length;
+      const highPotentialEvents = events.filter(e => e.foodPotential === 'High' || e.foodPotential === 'Very High').length;
+
+      document.getElementById('eventImpact').innerHTML = `
+        <div class="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+          <span class="text-blue-700">Total Events This Month:</span>
+          <span class="font-bold text-blue-800">${totalEvents}</span>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-green-50 rounded-lg">
+          <span class="text-green-700">Events Today:</span>
+          <span class="font-bold text-green-800">${todayEvents}</span>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-orange-50 rounded-lg">
+          <span class="text-orange-700">Upcoming Events:</span>
+          <span class="font-bold text-orange-800">${upcomingEvents}</span>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+          <span class="text-red-700">High Food Potential:</span>
+          <span class="font-bold text-red-800">${highPotentialEvents}</span>
+        </div>
+      `;
+    }
+
+    function renderTopEventLocations() {
+      const locationCounts = {};
+      events.forEach(e => {
+        locationCounts[e.location] = (locationCounts[e.location] || 0) + 1;
+      });
+
+      const sorted = Object.entries(locationCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+      document.getElementById('topEventLocations').innerHTML = sorted.map(([location, count], index) => `
+        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 text-blue-600 font-bold text-sm">
+            ${index + 1}
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold">${location}</div>
+            <div class="text-sm text-gray-600">${count} events this month</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateEventStats() {
+      const filtered = filterEvents();
+      document.getElementById('eventStats').textContent = `${filtered.length} events found`;
+    }
+
+    function showCreateEventModal() {
+      document.getElementById('createEventModal').classList.remove('hidden');
+      document.getElementById('createEventModal').classList.add('flex');
+    }
+
+    function hideCreateEventModal() {
+      document.getElementById('createEventModal').classList.add('hidden');
+      document.getElementById('createEventModal').classList.remove('flex');
+    }
+
+    function showNotificationSettings() {
+      alert('Notification settings will be available soon! You\'ll be able to set reminders for events with high food surplus potential.');
+    }
+
+    function setReminder(eventTitle) {
+      alert(`Reminder set for "${eventTitle}"! You'll be notified 30 minutes before the event.`);
+    }
+
+    function refreshEvents() {
+      renderEvents();
+      renderWeeklyCalendar();
+      renderEventImpact();
+      renderTopEventLocations();
+      updateEventStats();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      renderEvents();
+      renderWeeklyCalendar();
+      renderEventImpact();
+      renderTopEventLocations();
+      updateEventStats();
+
+      // Filter buttons
+      document.querySelectorAll('.event-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.event-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.filter;
+          renderEvents();
+          updateEventStats();
+        });
+      });
+
+      // Sort dropdown
+      document.getElementById('sortEvents').addEventListener('change', function() {
+        // Sort functionality can be implemented here
+        renderEvents();
+      });
+
+      // Create event form
+      document.getElementById('createEventForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Event created successfully! It will appear in the events list.');
+        hideCreateEventModal();
+      });
+    });
+  </script>
+</body>
+</html>

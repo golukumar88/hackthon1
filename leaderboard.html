@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leaderboard — Smart Food Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Campus leaderboard for food rescue champions">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+</head>
+<body class="bg-gray-50">
+  <!-- Updated header to match standardized navigation across all pages -->
+  <header class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">🍽️ Smart Food Share</h1>
+      <!-- Updated navigation to include all pages -->
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add Food</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+        <a href="leaderboard.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+      </nav>
+      <div class="flex items-center space-x-3">
+        <a href="sign-in.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign In</a>
+        <a href="sign-up.html" class="bg-white text-orange-600 hover:bg-gray-100 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign Up</a>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <div class="md:hidden px-6 pb-4">
+      <div class="flex flex-wrap gap-2 text-sm">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Add</a>
+        <a href="analytics.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Map</a>
+        <a href="leaderboard.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Feedback</a>
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Enhanced hero section with trophy animations and stats -->
+  <section class="bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white py-12 text-center shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/10"></div>
+    <!-- Added floating trophy and medal icons -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-10 left-10 w-16 h-16 bg-white/10 rounded-full flex items-center justify-center text-2xl animate-bounce" style="animation-delay: 0s;">🏆</div>
+      <div class="absolute top-20 right-20 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-xl animate-bounce" style="animation-delay: 1s;">🥇</div>
+      <div class="absolute bottom-20 left-20 w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-xl animate-bounce" style="animation-delay: 2s;">🥈</div>
+      <div class="absolute bottom-10 right-10 w-18 h-18 bg-white/10 rounded-full flex items-center justify-center text-2xl animate-bounce" style="animation-delay: 1.5s;">🥉</div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <h2 class="text-4xl font-bold mb-4">Food Rescue Champions</h2>
+      <p class="opacity-90 text-lg mb-6">Celebrating our campus heroes who are making the biggest impact in reducing food waste</p>
+      <!-- Added competition period selector -->
+      <div class="flex justify-center gap-2 mb-4">
+        <button class="period-btn active" data-period="month">This Month</button>
+        <button class="period-btn" data-period="week">This Week</button>
+        <button class="period-btn" data-period="all">All Time</button>
+      </div>
+      <div class="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 inline-block">
+        <span class="text-sm">🔄 Updated: <span id="lastUpdated">Loading...</span></span>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <!-- Added top 3 podium section -->
+    <div class="card mb-10">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🏆</span>
+        <h3 class="text-xl font-semibold">Top 3 Champions</h3>
+        <div class="ml-auto text-sm text-gray-500">Based on total impact</div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6" id="podium">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Enhanced leaderboard sections with better styling and more categories -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">🏢</span>
+          <h3 class="text-xl font-semibold">Top Locations</h3>
+          <select id="locationMetric" class="ml-auto text-sm border border-gray-300 rounded-lg px-2 py-1">
+            <option value="plates">By Plates Saved</option>
+            <option value="listings">By Listings Posted</option>
+            <option value="impact">By Environmental Impact</option>
+          </select>
+        </div>
+        <div id="locationLeaderboard" class="space-y-3">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">👥</span>
+          <h3 class="text-xl font-semibold">Top Contributors</h3>
+          <select id="contributorMetric" class="ml-auto text-sm border border-gray-300 rounded-lg px-2 py-1">
+            <option value="claims">By Food Claimed</option>
+            <option value="listings">By Food Donated</option>
+            <option value="streak">By Streak Days</option>
+          </select>
+        </div>
+        <div id="contributorLeaderboard" class="space-y-3">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Added food category champions -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🍽️</span>
+        <h3 class="text-xl font-semibold">Category Champions</h3>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4" id="categoryChampions">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added achievements and badges section -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🎖️</span>
+        <h3 class="text-xl font-semibold">Recent Achievements</h3>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4" id="recentAchievements">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added monthly competition section -->
+    <div class="grid lg:grid-cols-2 gap-8">
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">📅</span>
+          <h3 class="text-xl font-semibold">Monthly Competition</h3>
+        </div>
+        <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6">
+          <h4 class="font-bold text-purple-800 mb-3">Zero Waste Challenge</h4>
+          <div class="space-y-3" id="monthlyChallenge">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">📊</span>
+          <h3 class="text-xl font-semibold">Competition Stats</h3>
+        </div>
+        <div class="space-y-4" id="competitionStats">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Enhanced footer to match other pages -->
+  <footer class="bg-gradient-to-r from-green-700 via-teal-600 to-blue-600 text-white text-center p-6 mt-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-lg font-semibold mb-2">🌱 Smart Food Share © 2025 — Kolkata Campus</p>
+      <p class="text-sm opacity-80">Together for a Zero-Waste Future</p>
+    </div>
+  </footer>
+
+  <script>
+    function read(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+    
+    let currentPeriod = 'month';
+
+    function filterByPeriod(data, period, dateField = 'createdAt') {
+      const now = Date.now();
+      const dayMs = 24 * 60 * 60 * 1000;
+      
+      switch(period) {
+        case 'week':
+          return data.filter(item => now - item[dateField] < 7 * dayMs);
+        case 'month':
+          return data.filter(item => now - item[dateField] < 30 * dayMs);
+        default:
+          return data;
+      }
+    }
+
+    function getRankIcon(rank) {
+      switch(rank) {
+        case 1: return '🥇';
+        case 2: return '🥈';
+        case 3: return '🥉';
+        default: return `#${rank}`;
+      }
+    }
+
+    function getRankClass(rank) {
+      switch(rank) {
+        case 1: return 'from-yellow-100 to-yellow-200 border-yellow-300';
+        case 2: return 'from-gray-100 to-gray-200 border-gray-300';
+        case 3: return 'from-orange-100 to-orange-200 border-orange-300';
+        default: return 'from-blue-50 to-blue-100 border-blue-200';
+      }
+    }
+
+    function renderPodium() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const locTotals = {};
+      
+      listings.forEach(l => { 
+        locTotals[l.location] = (locTotals[l.location] || 0) + Number(l.quantity || 0); 
+      });
+      
+      const top3 = Object.entries(locTotals)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
+      document.getElementById('podium').innerHTML = top3.map(([location, plates], index) => {
+        const rank = index + 1;
+        const co2Saved = (plates * 0.3).toFixed(1);
+        const waterSaved = plates * 5;
+        
+        return `
+          <div class="bg-gradient-to-br ${getRankClass(rank)} border-2 rounded-xl p-6 text-center relative overflow-hidden">
+            <div class="absolute top-2 right-2 text-3xl opacity-20">${getRankIcon(rank)}</div>
+            <img src="/placeholder.svg?height=80&width=80" class="w-16 h-16 rounded-full mx-auto mb-3 object-cover border-4 border-white shadow-lg">
+            <h4 class="font-bold text-lg mb-2">${location}</h4>
+            <div class="space-y-1 text-sm">
+              <div class="flex justify-between">
+                <span>Plates Saved:</span>
+                <span class="font-semibold">${plates}</span>
+              </div>
+              <div class="flex justify-between">
+                <span>CO₂ Avoided:</span>
+                <span class="font-semibold">${co2Saved}kg</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Water Saved:</span>
+                <span class="font-semibold">${waterSaved}L</span>
+              </div>
+            </div>
+            <div class="mt-3 text-2xl">${getRankIcon(rank)}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderLocationLeaderboard() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const metric = document.getElementById('locationMetric').value;
+      const locData = {};
+      
+      listings.forEach(l => {
+        const loc = l.location;
+        if (!locData[loc]) {
+          locData[loc] = { plates: 0, listings: 0, impact: 0 };
+        }
+        locData[loc].plates += Number(l.quantity || 0);
+        locData[loc].listings += 1;
+        locData[loc].impact += Number(l.quantity || 0) * 0.3; // CO2 impact
+      });
+
+      const sorted = Object.entries(locData)
+        .sort((a, b) => b[1][metric] - a[1][metric])
+        .slice(0, 10);
+
+      document.getElementById('locationLeaderboard').innerHTML = sorted.map(([location, data], index) => {
+        const rank = index + 1;
+        const value = metric === 'impact' ? data[metric].toFixed(1) + 'kg CO₂' : 
+                     metric === 'plates' ? data[metric] + ' plates' : 
+                     data[metric] + ' listings';
+        
+        return `
+          <div class="flex items-center gap-4 p-4 bg-gradient-to-r ${getRankClass(rank)} border rounded-lg hover:shadow-md transition-all">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-white/80 font-bold text-sm">
+              ${getRankIcon(rank)}
+            </div>
+            <img src="/placeholder.svg?height=40&width=40" class="w-10 h-10 rounded-lg object-cover">
+            <div class="flex-1">
+              <h4 class="font-semibold">${location}</h4>
+              <p class="text-sm text-gray-600">${data.plates} plates • ${data.listings} listings</p>
+            </div>
+            <div class="text-right">
+              <div class="font-bold text-lg">${value}</div>
+              <div class="text-xs text-gray-500">Impact Score: ${Math.round(data.impact * 10)}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderContributorLeaderboard() {
+      const claims = filterByPeriod(read('claims', []), currentPeriod, 'at');
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const metric = document.getElementById('contributorMetric').value;
+      
+      // Generate sample contributors with realistic data
+      const contributors = [
+        { name: 'Rahul Kumar', avatar: 'student1', claims: 15, listings: 8, streak: 12 },
+        { name: 'Priya Sharma', avatar: 'student2', claims: 12, listings: 12, streak: 18 },
+        { name: 'Amit Singh', avatar: 'student3', claims: 18, listings: 5, streak: 8 },
+        { name: 'Sneha Patel', avatar: 'student4', claims: 9, listings: 15, streak: 22 },
+        { name: 'Vikash Gupta', avatar: 'student5', claims: 14, listings: 7, streak: 15 },
+        { name: 'Anita Roy', avatar: 'student6', claims: 11, listings: 10, streak: 10 },
+        { name: 'Ravi Mehta', avatar: 'student7', claims: 8, listings: 18, streak: 25 },
+        { name: 'Kavya Joshi', avatar: 'student8', claims: 16, listings: 6, streak: 7 }
+      ].sort((a, b) => b[metric] - a[metric]).slice(0, 8);
+
+      document.getElementById('contributorLeaderboard').innerHTML = contributors.map((contributor, index) => {
+        const rank = index + 1;
+        const value = metric === 'streak' ? contributor[metric] + ' days' : contributor[metric];
+        
+        return `
+          <div class="flex items-center gap-4 p-4 bg-gradient-to-r ${getRankClass(rank)} border rounded-lg hover:shadow-md transition-all">
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-white/80 font-bold text-sm">
+              ${getRankIcon(rank)}
+            </div>
+            <img src="/placeholder.svg?height=40&width=40" class="w-10 h-10 rounded-full object-cover border-2 border-white">
+            <div class="flex-1">
+              <h4 class="font-semibold">${contributor.name}</h4>
+              <p class="text-sm text-gray-600">${contributor.claims} claimed • ${contributor.listings} donated</p>
+            </div>
+            <div class="text-right">
+              <div class="font-bold text-lg">${value}</div>
+              <div class="text-xs text-gray-500">Streak: ${contributor.streak} days</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCategoryChampions() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const categories = {
+        indian: { name: 'Indian', icon: '🍛', champion: 'Main Canteen', plates: 0 },
+        chinese: { name: 'Chinese', icon: '🥢', champion: 'Student Center', plates: 0 },
+        continental: { name: 'Continental', icon: '🍝', champion: 'Faculty Lounge', plates: 0 },
+        snacks: { name: 'Snacks', icon: '🍪', champion: 'Event Hall', plates: 0 }
+      };
+
+      listings.forEach(l => {
+        const cat = l.category || 'indian';
+        if (categories[cat]) {
+          categories[cat].plates += Number(l.quantity || 0);
+        }
+      });
+
+      document.getElementById('categoryChampions').innerHTML = Object.values(categories).map(cat => `
+        <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 border border-indigo-200 rounded-xl p-4 text-center">
+          <div class="text-3xl mb-2">${cat.icon}</div>
+          <h4 class="font-semibold text-indigo-800 mb-1">${cat.name}</h4>
+          <p class="text-sm text-indigo-600 mb-2">${cat.champion}</p>
+          <div class="text-lg font-bold text-indigo-700">${cat.plates} plates</div>
+        </div>
+      `).join('');
+    }
+
+    function renderRecentAchievements() {
+      const achievements = [
+        { title: 'First 100 Plates', user: 'Main Canteen', icon: '🏆', time: Date.now() - 2 * 60 * 60 * 1000 },
+        { title: 'Week Streak Champion', user: 'Priya Sharma', icon: '🔥', time: Date.now() - 5 * 60 * 60 * 1000 },
+        { title: 'Zero Waste Hero', user: 'Hostel A Mess', icon: '🌱', time: Date.now() - 8 * 60 * 60 * 1000 }
+      ];
+
+      document.getElementById('recentAchievements').innerHTML = achievements.map(ach => `
+        <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 border border-yellow-200 rounded-xl p-4">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-2xl">${ach.icon}</span>
+            <div>
+              <h4 class="font-semibold text-yellow-800">${ach.title}</h4>
+              <p class="text-sm text-yellow-600">${ach.user}</p>
+            </div>
+          </div>
+          <p class="text-xs text-yellow-600">${new Date(ach.time).toLocaleString()}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderMonthlyChallenge() {
+      const listings = read('listings', []);
+      const monthlyTotal = filterByPeriod(listings, 'month').reduce((sum, l) => sum + Number(l.quantity || 0), 0);
+      const target = 500;
+      const progress = Math.min(100, (monthlyTotal / target) * 100);
+
+      document.getElementById('monthlyChallenge').innerHTML = `
+        <div class="flex justify-between items-center mb-2">
+          <span class="font-medium">Progress to Goal</span>
+          <span class="font-bold">${monthlyTotal}/${target} plates</span>
+        </div>
+        <div class="w-full bg-purple-200 rounded-full h-3 mb-3">
+          <div class="h-3 rounded-full bg-gradient-to-r from-purple-400 to-purple-600" style="width:${progress}%"></div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div class="text-center">
+            <div class="font-bold text-purple-700">${Math.round(progress)}%</div>
+            <div class="text-purple-600">Complete</div>
+          </div>
+          <div class="text-center">
+            <div class="font-bold text-purple-700">${Math.max(0, target - monthlyTotal)}</div>
+            <div class="text-purple-600">Remaining</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCompetitionStats() {
+      const listings = read('listings', []);
+      const claims = read('claims', []);
+      const locations = new Set(listings.map(l => l.location)).size;
+      const totalImpact = listings.reduce((sum, l) => sum + Number(l.quantity || 0), 0) * 0.3;
+
+      document.getElementById('competitionStats').innerHTML = `
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <span class="text-gray-600">Active Locations:</span>
+          <span class="font-bold text-gray-800">${locations}</span>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <span class="text-gray-600">Total Participants:</span>
+          <span class="font-bold text-gray-800">${Math.max(claims.length, 25)}</span>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <span class="text-gray-600">Environmental Impact:</span>
+          <span class="font-bold text-green-600">${totalImpact.toFixed(1)}kg CO₂</span>
+        </div>
+        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+          <span class="text-gray-600">Competition Days:</span>
+          <span class="font-bold text-blue-600">${Math.floor((Date.now() - (Date.now() - 30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000))}</span>
+        </div>
+      `;
+    }
+
+    function updateLastUpdated() {
+      document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
+    }
+
+    function initializePage() {
+      renderPodium();
+      renderLocationLeaderboard();
+      renderContributorLeaderboard();
+      renderCategoryChampions();
+      renderRecentAchievements();
+      renderMonthlyChallenge();
+      renderCompetitionStats();
+      updateLastUpdated();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePage();
+
+      // Period selector buttons
+      document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentPeriod = btn.dataset.period;
+          renderPodium();
+          renderLocationLeaderboard();
+          renderContributorLeaderboard();
+          renderCategoryChampions();
+        });
+      });
+
+      // Metric selectors
+      document.getElementById('locationMetric').addEventListener('change', renderLocationLeaderboard);
+      document.getElementById('contributorMetric').addEventListener('change', renderContributorLeaderboard);
+
+      // Auto-refresh every 2 minutes
+      setInterval(() => {
+        initializePage();
+      }, 120000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Analytics — Smart Food Share</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Analytics and impact tracking for surplus food redistribution">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body class="bg-gray-50">
+  <!-- Updated header to match standardized navigation across all pages -->
+  <header class="bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <h1 class="text-2xl font-bold">🍽️ Smart Food Share</h1>
+      <!-- Updated navigation to include all pages -->
+      <nav class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Add Food</a>
+        <a href="analytics.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full transition-all">Feedback</a>
+      </nav>
+      <div class="flex items-center space-x-3">
+        <a href="sign-in.html" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign In</a>
+        <a href="sign-up.html" class="bg-white text-orange-600 hover:bg-gray-100 px-4 py-2 rounded-full text-sm font-medium transition-all">Sign Up</a>
+      </div>
+    </div>
+    <!-- Mobile Navigation -->
+    <div class="md:hidden px-6 pb-4">
+      <div class="flex flex-wrap gap-2 text-sm">
+        <a href="index.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Dashboard</a>
+        <a href="listings.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Listings</a>
+        <a href="list.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Browse</a>
+        <a href="add.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Add</a>
+        <a href="analytics.html" class="underline font-semibold bg-white/20 px-3 py-1 rounded-full">Analytics</a>
+        <a href="map.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Map</a>
+        <a href="leaderboard.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Leaderboard</a>
+        <a href="events.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Events</a>
+        <a href="feedback.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Feedback</a>
+        <a href="sign-in.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign In</a>
+        <a href="sign-up.html" class="hover:bg-white/20 px-3 py-1 rounded-full">Sign Up</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Added enhanced hero section with live analytics and floating elements -->
+  <section class="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white py-12 text-center shadow-xl relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/10"></div>
+    <!-- Added floating analytics icons -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-10 left-10 w-16 h-16 bg-white/10 rounded-full flex items-center justify-center text-2xl animate-bounce" style="animation-delay: 0s;">📈</div>
+      <div class="absolute top-20 right-20 w-12 h-12 bg-white/10 rounded-full flex items-center justify-center text-xl animate-bounce" style="animation-delay: 1s;">🌱</div>
+      <div class="absolute bottom-20 left-20 w-14 h-14 bg-white/10 rounded-full flex items-center justify-center text-xl animate-bounce" style="animation-delay: 2s;">💧</div>
+      <div class="absolute bottom-10 right-10 w-18 h-18 bg-white/10 rounded-full flex items-center justify-center text-2xl animate-bounce" style="animation-delay: 1.5s;">🏆</div>
+    </div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <h2 class="text-4xl font-bold mb-4">Environmental Impact Dashboard</h2>
+      <p class="opacity-90 text-lg mb-6">Track your contribution to a zero-waste campus and see the real-time impact of food rescue efforts</p>
+      <!-- Added time period selector -->
+      <div class="flex justify-center gap-2 mb-4">
+        <button class="time-period-btn active" data-period="today">Today</button>
+        <button class="time-period-btn" data-period="week">This Week</button>
+        <button class="time-period-btn" data-period="month">This Month</button>
+        <button class="time-period-btn" data-period="all">All Time</button>
+      </div>
+      <div class="bg-white/20 backdrop-blur-sm rounded-full px-6 py-2 inline-block">
+        <span class="text-sm">🔄 Last updated: <span id="lastUpdated">Loading...</span></span>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <!-- Enhanced top stats with animated counters and better styling -->
+    <div id="topStats" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      <!-- Filled by JS -->
+    </div>
+
+    <!-- Added real-time activity feed -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-2xl">⚡</span>
+        <h3 class="text-xl font-semibold">Real-Time Activity</h3>
+        <span class="ml-auto bg-green-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">Live</span>
+      </div>
+      <div id="activityFeed" class="space-y-3 max-h-64 overflow-y-auto">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+      <!-- Enhanced monthly chart with better visualization -->
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">📊</span>
+          <h3 class="text-xl font-semibold">Monthly Food Saved</h3>
+          <select id="chartType" class="ml-auto text-sm border border-gray-300 rounded-lg px-2 py-1">
+            <option value="plates">Plates</option>
+            <option value="co2">CO₂ Saved</option>
+            <option value="water">Water Saved</option>
+          </select>
+        </div>
+        <div id="monthBars" class="mt-4 space-y-3">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <!-- Enhanced top locations with food images and more details -->
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">🏆</span>
+          <h3 class="text-xl font-semibold">Top Contributing Locations</h3>
+        </div>
+        <div id="topLocs" class="mt-4 space-y-3">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Enhanced environmental impact section with visual improvements -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🌍</span>
+        <h3 class="text-xl font-semibold">Environmental Impact</h3>
+        <div class="ml-auto text-sm text-gray-500">Updated every 5 minutes</div>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="envImpact">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added food category breakdown with images -->
+    <div class="grid lg:grid-cols-2 gap-8 mb-8">
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">🍽️</span>
+          <h3 class="text-xl font-semibold">Food Category Breakdown</h3>
+        </div>
+        <div id="categoryBreakdown" class="space-y-4">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">⏰</span>
+          <h3 class="text-xl font-semibold">Peak Activity Hours</h3>
+        </div>
+        <div id="peakHours" class="space-y-3">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Added achievements and milestones section -->
+    <div class="card mb-8">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">🎖️</span>
+        <h3 class="text-xl font-semibold">Achievements & Milestones</h3>
+      </div>
+      <div class="grid md:grid-cols-3 gap-4" id="achievements">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+
+    <!-- Added comparison and trends section -->
+    <div class="card">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="text-2xl">📈</span>
+        <h3 class="text-xl font-semibold">Trends & Comparisons</h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6" id="trends">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Enhanced footer to match other pages -->
+  <footer class="bg-gradient-to-r from-green-700 via-teal-600 to-blue-600 text-white text-center p-6 mt-10">
+    <div class="max-w-4xl mx-auto">
+      <p class="text-lg font-semibold mb-2">🌱 Smart Food Share © 2025 — Kolkata Campus</p>
+      <p class="text-sm opacity-80">Together for a Zero-Waste Future</p>
+    </div>
+  </footer>
+
+  <script>
+    function read(key, fallback){ try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } }
+    function minsLeft(l){ return Math.max(0, Math.floor((l.createdAt + l.safeHours*3600000 - Date.now())/60000)); }
+    function isActive(l){ return minsLeft(l) > 0; }
+
+    let currentPeriod = 'today';
+
+    function filterByPeriod(listings, period) {
+      const now = Date.now();
+      const dayMs = 24 * 60 * 60 * 1000;
+      
+      switch(period) {
+        case 'today':
+          return listings.filter(l => now - l.createdAt < dayMs);
+        case 'week':
+          return listings.filter(l => now - l.createdAt < 7 * dayMs);
+        case 'month':
+          return listings.filter(l => now - l.createdAt < 30 * dayMs);
+        default:
+          return listings;
+      }
+    }
+
+    function animateCounter(element, target, suffix = '') {
+      let current = 0;
+      const increment = target / 50;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target + suffix;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current) + suffix;
+        }
+      }, 30);
+    }
+
+    function renderTopStats() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const active = listings.filter(isActive);
+      const totalPlates = active.reduce((a,l)=>a + Number(l.quantity||0), 0);
+      const peopleFed = Math.round(totalPlates * 0.9);
+      const waterSavedL = totalPlates * 5;
+      const co2SavedKg = +(totalPlates * 0.3).toFixed(1);
+
+      document.getElementById('topStats').innerHTML = `
+        <div class="stat-card bg-gradient-to-br from-green-100 to-green-200">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">🍽️</span>
+            <div>
+              <div class="stat-number text-green-600" data-target="${totalPlates}">0</div>
+              <h3 class="text-sm font-semibold text-green-800">Plates Saved</h3>
+            </div>
+          </div>
+          <p class="text-xs text-green-600">+${Math.round(totalPlates * 0.1)} from yesterday</p>
+        </div>
+        <div class="stat-card bg-gradient-to-br from-blue-100 to-blue-200">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">👥</span>
+            <div>
+              <div class="stat-number text-blue-600" data-target="${peopleFed}">0</div>
+              <h3 class="text-sm font-semibold text-blue-800">People Fed</h3>
+            </div>
+          </div>
+          <p class="text-xs text-blue-600">Estimated impact</p>
+        </div>
+        <div class="stat-card bg-gradient-to-br from-purple-100 to-purple-200">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">💧</span>
+            <div>
+              <div class="stat-number text-purple-600" data-target="${waterSavedL}">0</div>
+              <h3 class="text-sm font-semibold text-purple-800">Liters Saved</h3>
+            </div>
+          </div>
+          <p class="text-xs text-purple-600">Water conservation</p>
+        </div>
+        <div class="stat-card bg-gradient-to-br from-orange-100 to-orange-200">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">🌱</span>
+            <div>
+              <div class="stat-number text-orange-600" data-target="${co2SavedKg}">0</div>
+              <h3 class="text-sm font-semibold text-orange-800">kg CO₂ Avoided</h3>
+            </div>
+          </div>
+          <p class="text-xs text-orange-600">Carbon footprint</p>
+        </div>
+      `;
+
+      // Animate counters
+      document.querySelectorAll('.stat-number').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        animateCounter(el, target);
+      });
+    }
+
+    function renderActivityFeed() {
+      const listings = read('listings', []).slice(0, 5);
+      const claims = read('claims', []).slice(0, 3);
+      
+      const activities = [
+        ...listings.map(l => ({
+          type: 'listing',
+          time: l.createdAt,
+          text: `🆕 New listing: ${l.title} at ${l.location}`,
+          icon: '🍽️'
+        })),
+        ...claims.map(c => ({
+          type: 'claim',
+          time: c.at,
+          text: `✅ Food claimed: ${c.listing?.title || 'Unknown item'}`,
+          icon: '🚚'
+        }))
+      ].sort((a, b) => b.time - a.time).slice(0, 8);
+
+      document.getElementById('activityFeed').innerHTML = activities.map(activity => `
+        <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+          <span class="text-xl">${activity.icon}</span>
+          <div class="flex-1">
+            <p class="text-sm font-medium">${activity.text}</p>
+            <p class="text-xs text-gray-500">${new Date(activity.time).toLocaleString()}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderMonthlyChart() {
+      const listings = read('listings', []);
+      const chartType = document.getElementById('chartType').value;
+      
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const byMonth = Array(12).fill(0);
+      
+      listings.forEach(l => {
+        const d = new Date(l.createdAt);
+        const value = chartType === 'plates' ? Number(l.quantity||0) :
+                     chartType === 'co2' ? Number(l.quantity||0) * 0.3 :
+                     Number(l.quantity||0) * 5;
+        byMonth[d.getMonth()] += value;
+      });
+      
+      const max = Math.max(1, ...byMonth);
+      const unit = chartType === 'plates' ? '' : chartType === 'co2' ? 'kg' : 'L';
+      
+      document.getElementById('monthBars').innerHTML = byMonth.map((v,i) => `
+        <div class="relative">
+          <div class="flex justify-between text-sm mb-1">
+            <span class="font-medium">${months[i]}</span>
+            <span class="text-blue-600 font-semibold">${Math.round(v)}${unit}</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-3 relative overflow-hidden">
+            <div class="h-3 rounded-full bg-gradient-to-r from-blue-400 to-blue-600 transition-all duration-1000" style="width:${Math.round(v/max*100)}%"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderTopLocations() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const locMap = {};
+      listings.forEach(l => { 
+        locMap[l.location] = (locMap[l.location]||0) + Number(l.quantity||0); 
+      });
+      
+      const top = Object.entries(locMap).sort((a,b)=>b[1]-a[1]).slice(0, 5);
+      const max = Math.max(1, ...top.map(([,v]) => v));
+      
+      document.getElementById('topLocs').innerHTML = top.map(([loc, val], index) => `
+        <div class="flex items-center gap-4 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+          <div class="flex items-center justify-center w-8 h-8 rounded-full ${
+            index === 0 ? 'bg-yellow-100 text-yellow-600' :
+            index === 1 ? 'bg-gray-100 text-gray-600' :
+            index === 2 ? 'bg-orange-100 text-orange-600' : 'bg-blue-100 text-blue-600'
+          } font-bold text-sm">
+            ${index + 1}
+          </div>
+          <img src="/placeholder.svg?height=40&width=40" class="w-10 h-10 rounded-lg object-cover">
+          <div class="flex-1">
+            <span class="font-semibold">${loc}</span>
+            <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+              <div class="h-2 rounded-full bg-gradient-to-r from-green-400 to-green-600" style="width:${Math.round(val/max*100)}%"></div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-lg font-bold text-green-600">${val}</div>
+            <div class="text-xs text-gray-500">plates</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderEnvironmentalImpact() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const totalPlates = listings.reduce((a,l)=>a + Number(l.quantity||0), 0);
+      const co2SavedKg = +(totalPlates * 0.3).toFixed(1);
+      const waterSavedL = totalPlates * 5;
+      const energySaved = Math.round(totalPlates * 0.2);
+      const peopleFed = Math.round(totalPlates * 0.9);
+
+      document.getElementById('envImpact').innerHTML = `
+        <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border border-green-200">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">🌱</span>
+            <div>
+              <div class="text-2xl font-bold text-green-600">${co2SavedKg} kg</div>
+              <p class="text-sm text-green-700 font-medium">CO₂ Avoided</p>
+            </div>
+          </div>
+          <p class="text-xs text-green-600">Equivalent to planting ${Math.round(co2SavedKg * 0.5)} trees</p>
+        </div>
+        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">💧</span>
+            <div>
+              <div class="text-2xl font-bold text-blue-600">${waterSavedL} L</div>
+              <p class="text-sm text-blue-700 font-medium">Water Saved</p>
+            </div>
+          </div>
+          <p class="text-xs text-blue-600">${Math.round(waterSavedL / 8)} days of drinking water</p>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border border-purple-200">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">⚡</span>
+            <div>
+              <div class="text-2xl font-bold text-purple-600">${energySaved} kWh</div>
+              <p class="text-sm text-purple-700 font-medium">Energy Saved</p>
+            </div>
+          </div>
+          <p class="text-xs text-purple-600">Powers a home for ${Math.round(energySaved / 30)} days</p>
+        </div>
+        <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl border border-orange-200">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-3xl">👥</span>
+            <div>
+              <div class="text-2xl font-bold text-orange-600">${peopleFed}</div>
+              <p class="text-sm text-orange-700 font-medium">People Fed</p>
+            </div>
+          </div>
+          <p class="text-xs text-orange-600">Meals provided to community</p>
+        </div>
+      `;
+    }
+
+    function renderCategoryBreakdown() {
+      const listings = filterByPeriod(read('listings', []), currentPeriod);
+      const categories = {};
+      
+      listings.forEach(l => {
+        const cat = l.category || 'indian';
+        categories[cat] = (categories[cat] || 0) + Number(l.quantity || 0);
+      });
+
+      const total = Object.values(categories).reduce((a, b) => a + b, 0);
+      const categoryData = [
+        { name: 'Indian', icon: '🍛', color: 'from-red-400 to-red-600' },
+        { name: 'Chinese', icon: '🥢', color: 'from-yellow-400 to-yellow-600' },
+        { name: 'Continental', icon: '🍝', color: 'from-green-400 to-green-600' },
+        { name: 'Snacks', icon: '🍪', color: 'from-blue-400 to-blue-600' },
+        { name: 'Desserts', icon: '🍰', color: 'from-purple-400 to-purple-600' }
+      ];
+
+      document.getElementById('categoryBreakdown').innerHTML = categoryData.map(cat => {
+        const value = categories[cat.name.toLowerCase()] || 0;
+        const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
+        
+        return `
+          <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+            <span class="text-2xl">${cat.icon}</span>
+            <div class="flex-1">
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-medium">${cat.name}</span>
+                <span class="text-sm font-semibold">${value} plates (${percentage}%)</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div class="h-2 rounded-full bg-gradient-to-r ${cat.color}" style="width:${percentage}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderPeakHours() {
+      const listings = read('listings', []);
+      const hourCounts = Array(24).fill(0);
+      
+      listings.forEach(l => {
+        const hour = new Date(l.createdAt).getHours();
+        hourCounts[hour] += Number(l.quantity || 0);
+      });
+
+      const max = Math.max(1, ...hourCounts);
+      const peakHours = hourCounts.map((count, hour) => ({ hour, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 6);
+
+      document.getElementById('peakHours').innerHTML = peakHours.map(({ hour, count }) => `
+        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+          <div class="flex items-center gap-3">
+            <span class="text-xl">⏰</span>
+            <span class="font-medium">${hour}:00 - ${hour + 1}:00</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-20 bg-gray-200 rounded-full h-2">
+              <div class="h-2 rounded-full bg-gradient-to-r from-indigo-400 to-indigo-600" style="width:${Math.round(count/max*100)}%"></div>
+            </div>
+            <span class="text-sm font-semibold text-indigo-600">${count}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderAchievements() {
+      const listings = read('listings', []);
+      const totalPlates = listings.reduce((a,l)=>a + Number(l.quantity||0), 0);
+      
+      const achievements = [
+        {
+          title: 'Food Saver',
+          description: `Saved ${totalPlates} plates of food`,
+          icon: '🏆',
+          progress: Math.min(100, (totalPlates / 100) * 100),
+          unlocked: totalPlates >= 100
+        },
+        {
+          title: 'Water Guardian',
+          description: `Conserved ${totalPlates * 5}L of water`,
+          icon: '💧',
+          progress: Math.min(100, (totalPlates * 5 / 500) * 100),
+          unlocked: totalPlates * 5 >= 500
+        },
+        {
+          title: 'Carbon Fighter',
+          description: `Avoided ${(totalPlates * 0.3).toFixed(1)}kg CO₂`,
+          icon: '🌱',
+          progress: Math.min(100, (totalPlates * 0.3 / 50) * 100),
+          unlocked: totalPlates * 0.3 >= 50
+        }
+      ];
+
+      document.getElementById('achievements').innerHTML = achievements.map(ach => `
+        <div class="p-4 rounded-xl border ${ach.unlocked ? 'bg-gradient-to-br from-yellow-50 to-yellow-100 border-yellow-200' : 'bg-gray-50 border-gray-200'}">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="text-2xl ${ach.unlocked ? '' : 'grayscale'}">${ach.icon}</span>
+            <div>
+              <h4 class="font-semibold ${ach.unlocked ? 'text-yellow-800' : 'text-gray-600'}">${ach.title}</h4>
+              <p class="text-xs ${ach.unlocked ? 'text-yellow-600' : 'text-gray-500'}">${ach.description}</p>
+            </div>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="h-2 rounded-full ${ach.unlocked ? 'bg-gradient-to-r from-yellow-400 to-yellow-600' : 'bg-gray-400'}" style="width:${ach.progress}%"></div>
+          </div>
+          <p class="text-xs mt-1 ${ach.unlocked ? 'text-yellow-600' : 'text-gray-500'}">${Math.round(ach.progress)}% complete</p>
+        </div>
+      `).join('');
+    }
+
+    function renderTrends() {
+      const listings = read('listings', []);
+      const thisWeek = filterByPeriod(listings, 'week');
+      const lastWeek = listings.filter(l => {
+        const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        const twoWeeksAgo = Date.now() - 14 * 24 * 60 * 60 * 1000;
+        return l.createdAt >= twoWeeksAgo && l.createdAt < weekAgo;
+      });
+
+      const thisWeekTotal = thisWeek.reduce((a,l)=>a + Number(l.quantity||0), 0);
+      const lastWeekTotal = lastWeek.reduce((a,l)=>a + Number(l.quantity||0), 0);
+      const weeklyChange = lastWeekTotal > 0 ? ((thisWeekTotal - lastWeekTotal) / lastWeekTotal * 100).toFixed(1) : 0;
+
+      document.getElementById('trends').innerHTML = `
+        <div class="p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+          <h4 class="font-semibold text-blue-800 mb-3">Weekly Trend</h4>
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-2xl">${weeklyChange >= 0 ? '📈' : '📉'}</span>
+            <div>
+              <div class="text-xl font-bold text-blue-600">${weeklyChange >= 0 ? '+' : ''}${weeklyChange}%</div>
+              <p class="text-sm text-blue-700">vs last week</p>
+            </div>
+          </div>
+          <p class="text-xs text-blue-600">This week: ${thisWeekTotal} plates • Last week: ${lastWeekTotal} plates</p>
+        </div>
+        <div class="p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+          <h4 class="font-semibold text-green-800 mb-3">Campus Impact</h4>
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <span>Waste Reduction:</span>
+              <span class="font-semibold text-green-600">85%</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span>Student Participation:</span>
+              <span class="font-semibold text-green-600">67%</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span>Active Locations:</span>
+              <span class="font-semibold text-green-600">${new Set(listings.map(l => l.location)).size}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function updateLastUpdated() {
+      document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
+    }
+
+    function initializePage() {
+      renderTopStats();
+      renderActivityFeed();
+      renderMonthlyChart();
+      renderTopLocations();
+      renderEnvironmentalImpact();
+      renderCategoryBreakdown();
+      renderPeakHours();
+      renderAchievements();
+      renderTrends();
+      updateLastUpdated();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePage();
+
+      // Time period buttons
+      document.querySelectorAll('.time-period-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.time-period-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentPeriod = btn.dataset.period;
+          renderTopStats();
+          renderTopLocations();
+          renderEnvironmentalImpact();
+          renderCategoryBreakdown();
+        });
+      });
+
+      // Chart type selector
+      document.getElementById('chartType').addEventListener('change', renderMonthlyChart);
+
+      // Auto-refresh every 5 minutes
+      setInterval(() => {
+        initializePage();
+      }, 300000);
+
+      // Update timestamp every minute
+      setInterval(updateLastUpdated, 60000);
+    });
+  </script>
+</body>
+</html>
